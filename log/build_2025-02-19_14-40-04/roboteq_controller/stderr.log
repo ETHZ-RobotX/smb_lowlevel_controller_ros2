@@ -1,0 +1,19 @@
+[01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:[m[K In constructor ‘[01m[KSpeedControlNode::[01;32m[KSpeedControlNode[m[K()[m[K’:
+[01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:36:21:[m[K [01;35m[Kwarning: [m[K‘[01m[KSpeedControlNode::port_[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   36 |         std::string [01;35m[Kport_[m[K;
+      |                     [01;35m[K^~~~~[m[K
+[01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:35:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint SpeedControlNode::baudrate_[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   35 |         int [01;35m[Kbaudrate_[m[K;
+      |             [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:14:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   14 |         [01;35m[KSpeedControlNode[m[K() : Node("speed_control_node"), port_("/dev/ttyACM0"), baudrate_(115200), motor_channel_(1)
+      |         [01;35m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:35:13:[m[K [01;35m[Kwarning: [m[K‘[01m[KSpeedControlNode::baudrate_[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   35 |         int [01;35m[Kbaudrate_[m[K;
+      |             [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:34:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint SpeedControlNode::motor_channel_[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   34 |         int [01;35m[Kmotor_channel_[m[K;
+      |             [01;35m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:14:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   14 |         [01;35m[KSpeedControlNode[m[K() : Node("speed_control_node"), port_("/dev/ttyACM0"), baudrate_(115200), motor_channel_(1)
+      |         [01;35m[K^~~~~~~~~~~~~~~~[m[K

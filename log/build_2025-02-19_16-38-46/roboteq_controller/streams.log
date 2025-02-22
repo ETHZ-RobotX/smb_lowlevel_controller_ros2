@@ -1,0 +1,107 @@
+[0.013s] Invoking command in '/home/niles/ros2_ws/build/roboteq_controller': CMAKE_PREFIX_PATH=/opt/ros/jazzy:/home/niles/ros2_ws/install/serial:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PKG_CONFIG_PATH=/home/niles/ros2_ws/install/serial/lib/x86_64-linux-gnu/pkgconfig:/home/niles/ros2_ws/install/serial/lib/pkgconfig ROS_PACKAGE_PATH=/home/niles/ros2_ws/install/serial/share /usr/bin/cmake --build /home/niles/ros2_ws/build/roboteq_controller -- -j16 -l16
+[0.073s] [ 50%] [32mBuilding CXX object CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o[0m
+[1.493s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:47:42:[m[K [01;31m[Kerror: [m[K‘[01m[KInt32MultiArray[m[K’ is not a member of ‘[01m[Kstd_msgs::msg[m[K’
+[1.493s]    47 |         rclcpp::Publisher<std_msgs::msg::[01;31m[KInt32MultiArray[m[K>::SharedPtr wheel_speed_publisher_;
+[1.493s]       |                                          [01;31m[K^~~~~~~~~~~~~~~[m[K
+[1.493s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:47:57:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[1.493s]    47 |         rclcpp::Publisher<std_msgs::msg::Int32MultiArray[01;31m[K>[m[K::SharedPtr wheel_speed_publisher_;
+[1.493s]       |                                                         [01;31m[K^[m[K
+[1.493s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:47:60:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ at end of member declaration
+[1.493s]    47 |         rclcpp::Publisher<std_msgs::msg::Int32MultiArray>::[01;31m[KSharedPtr[m[K wheel_speed_publisher_;
+[1.493s]       |                                                            [01;31m[K^~~~~~~~~[m[K
+[1.493s]       |                                                                     [32m[K;[m[K
+[1.495s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:47:70:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_speed_publisher_[m[K’ does not name a type
+[1.495s]    47 |         rclcpp::Publisher<std_msgs::msg::Int32MultiArray>::SharedPtr [01;31m[Kwheel_speed_publisher_[m[K;
+[1.495s]       |                                                                      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[1.496s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:[m[K In constructor ‘[01m[KSpeedControlNode::[01;32m[KSpeedControlNode[m[K()[m[K’:
+[1.496s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:41:21:[m[K [01;35m[Kwarning: [m[K‘[01m[KSpeedControlNode::port_[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.496s]    41 |         std::string [01;35m[Kport_[m[K;
+[1.496s]       |                     [01;35m[K^~~~~[m[K
+[1.497s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:40:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint SpeedControlNode::baudrate_[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.497s]    40 |         int [01;35m[Kbaudrate_[m[K;
+[1.497s]       |             [01;35m[K^~~~~~~~~[m[K
+[1.497s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:14:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.497s]    14 |         [01;35m[KSpeedControlNode[m[K() : Node("speed_control_node"), port_("/dev/ttyACM0"), baudrate_(115200), motor_1_channel_(1), motor_2_channel_(2)
+[1.497s]       |         [01;35m[K^~~~~~~~~~~~~~~~[m[K
+[1.497s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:40:13:[m[K [01;35m[Kwarning: [m[K‘[01m[KSpeedControlNode::baudrate_[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.497s]    40 |         int [01;35m[Kbaudrate_[m[K;
+[1.497s]       |             [01;35m[K^~~~~~~~~[m[K
+[1.497s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:38:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint SpeedControlNode::motor_1_channel_[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.497s]    38 |         int [01;35m[Kmotor_1_channel_[m[K;
+[1.497s]       |             [01;35m[K^~~~~~~~~~~~~~~~[m[K
+[1.497s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:14:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.497s]    14 |         [01;35m[KSpeedControlNode[m[K() : Node("speed_control_node"), port_("/dev/ttyACM0"), baudrate_(115200), motor_1_channel_(1), motor_2_channel_(2)
+[1.497s]       |         [01;35m[K^~~~~~~~~~~~~~~~[m[K
+[1.505s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:28:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_speed_publisher_[m[K’ was not declared in this scope
+[1.506s]    28 |             [01;31m[Kwheel_speed_publisher_[m[K = this->create_publisher<std_msgs::msg::Int32MultiArray>("wheel_speed", 10);
+[1.506s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[1.506s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:28:76:[m[K [01;31m[Kerror: [m[K‘[01m[KInt32MultiArray[m[K’ is not a member of ‘[01m[Kstd_msgs::msg[m[K’
+[1.506s]    28 |         wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::[01;31m[KInt32MultiArray[m[K>("wheel_speed", 10);
+[1.507s]       |                                                                        [01;31m[K^~~~~~~~~~~~~~~[m[K
+[1.507s] 
+[1.507s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:28:92:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[KSpeedControlNode::create_publisher<<expression error> >(const char [12], int)[m[K’
+[1.507s]    28 | eed_publisher_ = [01;31m[Kthis->create_publisher<std_msgs::msg::Int32MultiArray>("wheel_speed", 10)[m[K;
+[1.507s]       |                  [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~[m[K
+[1.507s] 
+[1.507s] In file included from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+[1.507s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+[1.507s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/rclcpp.hpp:172[m[K,
+[1.507s]                  from [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:5[m[K:
+[1.507s] [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/node.hpp:197:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class MessageT, class AllocatorT, class PublisherT> std::shared_ptr<PublisherT> rclcpp::Node::[01;32m[Kcreate_publisher[m[K(const std::string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&)[m[K’
+[1.507s]   197 |   [01;36m[Kcreate_publisher[m[K(
+[1.507s]       |   [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[1.507s] [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/node.hpp:197:3:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[1.507s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:28:92:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[1.507s]    28 | eed_publisher_ = [01;31m[Kthis->create_publisher<std_msgs::msg::Int32MultiArray>("wheel_speed", 10)[m[K;
+[1.507s]       |                  [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~[m[K
+[1.507s] 
+[1.518s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:[m[K In member function ‘[01m[Kvoid SpeedControlNode::[01;32m[Kget_speed[m[K()[m[K’:
+[1.518s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:140:36:[m[K [01;31m[Kerror: [m[K‘[01m[KInt32MultiArray[m[K’ is not a member of ‘[01m[Kstd_msgs::msg[m[K’
+[1.518s]   140 |                     std_msgs::msg::[01;31m[KInt32MultiArray[m[K msg;
+[1.518s]       |                                    [01;31m[K^~~~~~~~~~~~~~~[m[K
+[1.518s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:141:21:[m[K [01;31m[Kerror: [m[K‘[01m[Kmsg[m[K’ was not declared in this scope
+[1.518s]   141 |                     [01;31m[Kmsg[m[K.data = {speed.motor_1_speed, speed.motor_2_speed};
+[1.518s]       |                     [01;31m[K^~~[m[K
+[1.518s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:141:21:[m[K [01;36m[Knote: [m[Ksuggested alternatives:
+[1.519s] In file included from [01m[K/opt/ros/jazzy/include/rcl_interfaces/rcl_interfaces/srv/detail/list_parameters__struct.hpp:156[m[K,
+[1.519s]                  from [01m[K/opt/ros/jazzy/include/rcl_interfaces/rcl_interfaces/srv/list_parameters.hpp:7[m[K,
+[1.519s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/copy_all_parameter_values.hpp:21[m[K,
+[1.519s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/rclcpp.hpp:171[m[K:
+[1.519s] [01m[K/opt/ros/jazzy/include/rcl_interfaces/rcl_interfaces/msg/detail/list_parameters_result__struct.hpp:30:11:[m[K [01;36m[Knote: [m[K  ‘[01m[Krcl_interfaces::msg[m[K’
+[1.519s]    30 | namespace [01;36m[Kmsg[m[K
+[1.519s]       |           [01;36m[K^~~[m[K
+[1.519s] In file included from [01m[K/opt/ros/jazzy/include/service_msgs/service_msgs/msg/detail/service_event_info__struct.hpp:23[m[K,
+[1.519s]                  from [01m[K/opt/ros/jazzy/include/rcl_interfaces/rcl_interfaces/srv/detail/list_parameters__struct.hpp:267[m[K:
+[1.519s] [01m[K/opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/time__struct.hpp:30:11:[m[K [01;36m[Knote: [m[K  ‘[01m[Kbuiltin_interfaces::msg[m[K’
+[1.519s]    30 | namespace [01;36m[Kmsg[m[K
+[1.520s]       |           [01;36m[K^~~[m[K
+[1.520s] [01m[K/opt/ros/jazzy/include/service_msgs/service_msgs/msg/detail/service_event_info__struct.hpp:34:11:[m[K [01;36m[Knote: [m[K  ‘[01m[Kservice_msgs::msg[m[K’
+[1.520s]    34 | namespace [01;36m[Kmsg[m[K
+[1.520s]       |           [01;36m[K^~~[m[K
+[1.520s] In file included from [01m[K/opt/ros/jazzy/include/statistics_msgs/statistics_msgs/msg/detail/metrics_message__struct.hpp:26[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/statistics_msgs/statistics_msgs/msg/metrics_message.hpp:7[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/libstatistics_collector/libstatistics_collector/collector/generate_statistics_message.hpp:21[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/topic_statistics/subscription_topic_statistics.hpp:23[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/subscription.hpp:50[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/any_executable.hpp:25[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/memory_strategy.hpp:25[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/memory_strategies.hpp:18[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/executor_options.hpp:22[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/executor.hpp:38[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25[m[K,
+[1.520s]                  from [01m[K/opt/ros/jazzy/include/rclcpp/rclcpp/executors.hpp:21[m[K:
+[1.520s] [01m[K/opt/ros/jazzy/include/statistics_msgs/statistics_msgs/msg/detail/statistic_data_point__struct.hpp:30:11:[m[K [01;36m[Knote: [m[K  ‘[01m[Kstatistics_msgs::msg[m[K’
+[1.520s]    30 | namespace [01;36m[Kmsg[m[K
+[1.520s]       |           [01;36m[K^~~[m[K
+[1.520s] In file included from [01m[K/opt/ros/jazzy/include/std_msgs/std_msgs/msg/int32.hpp:7[m[K,
+[1.520s]                  from [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:7[m[K:
+[1.520s] [01m[K/opt/ros/jazzy/include/std_msgs/std_msgs/msg/detail/int32__struct.hpp:30:11:[m[K [01;36m[Knote: [m[K  ‘[01m[Kstd_msgs::msg[m[K’
+[1.520s]    30 | namespace [01;36m[Kmsg[m[K
+[1.520s]       |           [01;36m[K^~~[m[K
+[1.526s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:142:21:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_speed_publisher_[m[K’ was not declared in this scope
+[1.526s]   142 |                     [01;31m[Kwheel_speed_publisher_[m[K->publish(msg);
+[1.526s]       |                     [01;31m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[1.970s] gmake[2]: *** [CMakeFiles/speed_control_node.dir/build.make:76: CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o] Error 1
+[1.970s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/speed_control_node.dir/all] Error 2
+[1.970s] gmake: *** [Makefile:146: all] Error 2
+[1.973s] Invoked command in '/home/niles/ros2_ws/build/roboteq_controller' returned '2': CMAKE_PREFIX_PATH=/opt/ros/jazzy:/home/niles/ros2_ws/install/serial:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PKG_CONFIG_PATH=/home/niles/ros2_ws/install/serial/lib/x86_64-linux-gnu/pkgconfig:/home/niles/ros2_ws/install/serial/lib/pkgconfig ROS_PACKAGE_PATH=/home/niles/ros2_ws/install/serial/share /usr/bin/cmake --build /home/niles/ros2_ws/build/roboteq_controller -- -j16 -l16
