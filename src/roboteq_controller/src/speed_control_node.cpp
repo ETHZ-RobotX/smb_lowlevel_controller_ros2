@@ -26,7 +26,7 @@ class SpeedControlNode : public rclcpp::Node
             wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Int32MultiArray>("wheel_speed", 10);
             RCLCPP_INFO(this->get_logger(), "Publisher created");
             wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Int32MultiArray>("target_speed", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
-            publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::get_speed, this));
+            publish_timer_ = this->create_wall_timer(20ms, std::bind(&SpeedControlNode::get_speed, this));
             RCLCPP_INFO(this->get_logger(), "Timer created");
             freq_timer_ = this->create_wall_timer(1s, std::bind(&SpeedControlNode::stream_rate, this));
             
@@ -70,7 +70,7 @@ class SpeedControlNode : public rclcpp::Node
                     std::string echo_query = "^ECHOF 1\r\n";
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", echo_query.c_str());
                     serial_->write(echo_query);
-                    std::string speed_query = "/\"d=\",\":\"?S " + std::to_string(motor_1_channel_) + "_?S " + std::to_string(motor_2_channel_) + "_# 5\r\n";
+                    std::string speed_query = "/\"d=\",\":\"?S " + std::to_string(motor_1_channel_) + "_?S " + std::to_string(motor_2_channel_) + "_# 10\r\n";
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", speed_query.c_str());
                     serial_->write(speed_query);
                     
@@ -113,6 +113,7 @@ class SpeedControlNode : public rclcpp::Node
                                             "!S 2 " + std::to_string(target_speed_2) + "\r\n";
 
                 serial_->write(speed_command);
+                serial_->flush();
 
                 // Wait for '+' acknowledgment
                 std::string response;

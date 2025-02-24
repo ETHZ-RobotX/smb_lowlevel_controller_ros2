@@ -16,7 +16,7 @@ class SpeedPubNode : public rclcpp::Node
         {
             publisher_ = this->create_publisher<std_msgs::msg::Int32MultiArray>("target_speed", 10);
             timer_ = this->create_wall_timer(
-            10ms, std::bind(&SpeedPubNode::timer_callback, this));
+            20ms, std::bind(&SpeedPubNode::timer_callback, this));
         }
 
     private:
