@@ -13,16 +13,12 @@ using namespace std::chrono_literals;
 class SpeedControlNode : public rclcpp::Node
 {
     public:
-        SpeedControlNode() : Node("speed_control_node"), port_("/dev/ttyACM0"), baudrate_(115200), motor_1_channel_(1), motor_2_channel_(2)
+        SpeedControlNode() : Node("speed_control_node"), port_("/dev/ttyUSB0"), baudrate_(115200), motor_1_channel_(1), motor_2_channel_(2)
         {
             this->declare_parameter<std::string>("port", port_);
             this->declare_parameter<int>("baudrate", baudrate_);
             this->declare_parameter<int>("motor_1_channel", motor_1_channel_);
             this->declare_parameter<int>("motor_2_channel", motor_2_channel_);
-
-            // port_ = this->get_parameter("port").as_string();
-            // baudrate_ = this->get_parameter("baudrate").as_int();
-            // motor_channel_ = this->get_parameter("motor_channel").as_int();
 
             connect();
             RCLCPP_INFO(this->get_logger(), "Attempting to create a publisher");
@@ -70,6 +66,10 @@ class SpeedControlNode : public rclcpp::Node
                     RCLCPP_INFO(this->get_logger(), "Serial port initialized");
                     state_ = 1;
                     
+
+                    std::string echo_query = "^ECHOF 1\r\n";
+                    RCLCPP_INFO(this->get_logger(), "Sending Query %s", echo_query.c_str());
+                    serial_->write(echo_query);
                     std::string speed_query = "/\"d=\",\":\"?S " + std::to_string(motor_1_channel_) + "_?S " + std::to_string(motor_2_channel_) + "_# 5\r\n";
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", speed_query.c_str());
                     serial_->write(speed_query);
@@ -105,18 +105,43 @@ class SpeedControlNode : public rclcpp::Node
 
         void set_speed(const std_msgs::msg::Int32MultiArray::SharedPtr msg)
         {
-            if(check_connection())
+            if (check_connection())
             {
                 int target_speed_1 = msg->data[0];
                 int target_speed_2 = msg->data[1];
-                std::string speed_command_1 = "!S 1 " + std::to_string(target_speed_1) + "\r\n";
-                std::string speed_command_2 = "!S 2 " + std::to_string(target_speed_2) + "\r\n";
-                if(check_connection())
+                std::string speed_command = "!S 1 " + std::to_string(target_speed_1) + "\r" +
+                                            "!S 2 " + std::to_string(target_speed_2) + "\r\n";
+
+                serial_->write(speed_command);
+
+                // Wait for '+' acknowledgment
+                std::string response;
+                auto start_time = std::chrono::steady_clock::now();
+                bool ack_received = false;
+
+                while (std::chrono::steady_clock::now() - start_time < std::chrono::milliseconds(500)) // 500 ms timeout
                 {
-                    serial_->write(speed_command_1);
-                    serial_->write(speed_command_1);
-                    RCLCPP_INFO(this->get_logger(), "Speed 1 set to: %d", msg->data[0]);
-                    RCLCPP_INFO(this->get_logger(), "Speed 2 set to: %d", msg->data[1]);
+                    if (serial_->available())
+                    {
+                        char c;
+                        serial_->read(reinterpret_cast<uint8_t*>(&c), 1);  // Cast char* to uint8_t*
+                        response += c;
+
+                        if (c == '+') // Check for acknowledgment
+                        {
+                            ack_received = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (ack_received)
+                {
+                    // RCLCPP_INFO(this->get_logger(), "Acknowledgment received: +");
+                }
+                else
+                {
+                    RCLCPP_WARN(this->get_logger(), "No acknowledgment received within timeout");
                 }
             }
             else
@@ -124,6 +149,7 @@ class SpeedControlNode : public rclcpp::Node
                 RCLCPP_ERROR(this->get_logger(), "Serial port not open");
             }
         }
+
 
         void get_speed()
         {
@@ -133,7 +159,7 @@ class SpeedControlNode : public rclcpp::Node
             {
                 serial_->flushInput();
                 std::string response = serial_->readline(100, "\r");
-                // RCLCPP_INFO(this->get_logger(), "Speed: %s", response.c_str());
+                // RCLCPP_INFO(this->get_logger(), "Received: %s", response.c_str());
 
                 try
                 {
@@ -177,7 +203,7 @@ class SpeedControlNode : public rclcpp::Node
         {
             if(check_connection())
             {
-                RCLCPP_INFO(this->get_logger(), "Stream rate: %d", count_);
+                // RCLCPP_INFO(this->get_logger(), "Stream rate: %d", count_);
                 count_ = 0;
             }
         }
