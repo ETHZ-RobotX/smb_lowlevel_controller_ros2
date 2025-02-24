@@ -76,7 +76,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 17,
+				"line" : 21,
 				"parent" : 0
 			},
 			{
@@ -571,6 +571,12 @@
 			},
 			{
 				"command" : 8,
+				"file" : 0,
+				"line" : 17,
+				"parent" : 0
+			},
+			{
+				"command" : 8,
 				"file" : 1,
 				"line" : 142,
 				"parent" : 3
@@ -614,11 +620,15 @@
 				},
 				{
 					"backtrace" : 97,
+					"path" : "/home/niles/ros2_ws/src/roboteq_controller/include"
+				},
+				{
+					"backtrace" : 98,
 					"isSystem" : true,
 					"path" : "/opt/ros/jazzy/include/rclcpp"
 				},
 				{
-					"backtrace" : 97,
+					"backtrace" : 98,
 					"isSystem" : true,
 					"path" : "/opt/ros/jazzy/include/std_msgs"
 				},

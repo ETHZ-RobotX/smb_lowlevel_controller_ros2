@@ -4,6 +4,7 @@
 CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp \
   /home/niles/ros2_ws/install/serial/include/serial/serial.h \
   /home/niles/ros2_ws/install/serial/include/serial/v8stdint.h \
+  /home/niles/ros2_ws/src/roboteq_controller/include/roboteq_controller/inter_process_communication.h \
   /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/duration__builder.hpp \
   /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/duration__struct.hpp \
   /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/duration__traits.hpp \
@@ -1051,6 +1052,8 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2
 
 /usr/include/c++/13/condition_variable:
 
+/usr/include/c++/13/compare:
+
 /opt/ros/jazzy/include/rclcpp/rclcpp/subscription_wait_set_mask.hpp:
 
 /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/type_description/individual_type_description__struct.h:
@@ -1299,13 +1302,15 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2
 
 /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/visibility_control.h:
 
-/opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/duration.hpp:
-
 /opt/ros/jazzy/include/libstatistics_collector/libstatistics_collector/topic_statistics_collector/received_message_period.hpp:
+
+/opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/duration.hpp:
 
 /usr/include/c++/13/bits/atomic_futex.h:
 
 /opt/ros/jazzy/include/rclcpp/rclcpp/callback_group.hpp:
+
+/opt/ros/jazzy/include/rcl/rcl/init_options.h:
 
 /usr/include/x86_64-linux-gnu/bits/sigaction.h:
 
@@ -1389,8 +1394,6 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2
 
 /opt/ros/jazzy/include/rclcpp/rclcpp/loaned_message.hpp:
 
-/opt/ros/jazzy/include/rcl/rcl/init_options.h:
-
 /opt/ros/jazzy/include/rcl_interfaces/rcl_interfaces/srv/detail/describe_parameters__struct.hpp:
 
 /opt/ros/jazzy/include/rclcpp/rclcpp/experimental/ros_message_intra_process_buffer.hpp:
@@ -1400,10 +1403,6 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h:
 
 /usr/include/c++/13/bits/ostream.tcc:
-
-/opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/time__traits.hpp:
-
-/opt/ros/jazzy/include/rcl_interfaces/rcl_interfaces/msg/detail/set_parameters_result__builder.hpp:
 
 /opt/ros/jazzy/include/rclcpp/rclcpp/executors.hpp:
 
@@ -1436,6 +1435,12 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2
 /opt/ros/jazzy/include/rmw/rmw/events_statuses/incompatible_qos.h:
 
 /usr/include/c++/13/bits/stl_iterator.h:
+
+/opt/ros/jazzy/include/rcl_interfaces/rcl_interfaces/srv/describe_parameters.hpp:
+
+/opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/time__traits.hpp:
+
+/opt/ros/jazzy/include/rcl_interfaces/rcl_interfaces/msg/detail/set_parameters_result__builder.hpp:
 
 /opt/ros/jazzy/include/rclcpp/rclcpp/subscription_base.hpp:
 
@@ -1483,10 +1488,6 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2
 
 /opt/ros/jazzy/include/statistics_msgs/statistics_msgs/msg/detail/statistic_data_point__struct.hpp:
 
-/opt/ros/jazzy/include/rclcpp/rclcpp/create_service.hpp:
-
-/opt/ros/jazzy/include/rcl/rcl/allocator.h:
-
 /usr/include/x86_64-linux-gnu/c++/13/bits/atomic_word.h:
 
 /usr/include/c++/13/bits/charconv.h:
@@ -1508,6 +1509,10 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2
 /opt/ros/jazzy/include/rcl/rcl/types.h:
 
 /opt/ros/jazzy/include/rclcpp/rclcpp/executor.hpp:
+
+/opt/ros/jazzy/include/rclcpp/rclcpp/create_service.hpp:
+
+/opt/ros/jazzy/include/rcl/rcl/allocator.h:
 
 /opt/ros/jazzy/include/rcl/rcl/timer.h:
 
@@ -1660,8 +1665,6 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2
 /usr/include/c++/13/bits/stl_relops.h:
 
 /opt/ros/jazzy/include/rcl_interfaces/rcl_interfaces/msg/parameter_type.hpp:
-
-/opt/ros/jazzy/include/rcl_interfaces/rcl_interfaces/srv/describe_parameters.hpp:
 
 /opt/ros/jazzy/include/rclcpp/rclcpp/parameter_map.hpp:
 
@@ -1916,6 +1919,8 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2
 /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
 
 /opt/ros/jazzy/include/rclcpp/rclcpp/any_executable.hpp:
+
+/home/niles/ros2_ws/src/roboteq_controller/include/roboteq_controller/inter_process_communication.h:
 
 /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/duration__traits.hpp:
 
@@ -2298,5 +2303,3 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: /home/niles/ros2
 /opt/ros/jazzy/include/rclcpp/rclcpp/parameter_client.hpp:
 
 /usr/include/c++/13/codecvt:
-
-/usr/include/c++/13/compare:

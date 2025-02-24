@@ -5,6 +5,7 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o
  /home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp
  /home/niles/ros2_ws/install/serial/include/serial/serial.h
  /home/niles/ros2_ws/install/serial/include/serial/v8stdint.h
+ /home/niles/ros2_ws/src/roboteq_controller/include/roboteq_controller/inter_process_communication.h
  /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/duration__builder.hpp
  /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/duration__struct.hpp
  /opt/ros/jazzy/include/builtin_interfaces/builtin_interfaces/msg/detail/duration__traits.hpp

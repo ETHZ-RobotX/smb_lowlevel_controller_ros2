@@ -1,0 +1,126 @@
+[0.000000] (-) TimerEvent: {}
+[0.000102] (-) JobUnselected: {'identifier': 'robosense_description'}
+[0.000121] (-) JobUnselected: {'identifier': 'robosense_gazebo_plugins'}
+[0.000132] (-) JobUnselected: {'identifier': 'serial'}
+[0.000142] (-) JobUnselected: {'identifier': 'smb_description'}
+[0.000152] (-) JobUnselected: {'identifier': 'smb_driver'}
+[0.000161] (-) JobUnselected: {'identifier': 'smb_lowlevel_controller'}
+[0.000170] (roboteq_controller) JobQueued: {'identifier': 'roboteq_controller', 'dependencies': OrderedDict({'serial': '/home/niles/ros2_ws/install/serial'})}
+[0.000183] (roboteq_controller) JobStarted: {'identifier': 'roboteq_controller'}
+[0.009831] (roboteq_controller) JobProgress: {'identifier': 'roboteq_controller', 'progress': 'cmake'}
+[0.010406] (roboteq_controller) JobProgress: {'identifier': 'roboteq_controller', 'progress': 'build'}
+[0.010728] (roboteq_controller) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/niles/ros2_ws/build/roboteq_controller', '--', '-j16', '-l16'], 'cwd': '/home/niles/ros2_ws/build/roboteq_controller', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'CONDA_PROMPT_MODIFIER': '(rss)', 'USER': 'niles', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'ROS_PACKAGE_PATH': '/home/niles/ros2_ws/install/serial/share', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/niles', 'CONDA_SHLVL': '2', 'OLDPWD': '/home/niles/ros2_ws/src/roboteq_controller', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2145', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', '_CE_M': '', 'GNOME_KEYRING_CONTROL': '/run/user/1000/keyring', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'niles', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.SettingsDaemon.MediaKeys.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'PKG_CONFIG_PATH': '/home/niles/ros2_ws/install/serial/lib/x86_64-linux-gnu/pkgconfig:/home/niles/ros2_ws/install/serial/lib/pkgconfig', 'USERNAME': 'niles', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', '_CE_CONDA': '', 'PATH': '/home/niles/gems/bin:/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/home/niles/miniforge3/envs/rss/bin:/home/niles/miniforge3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/niles-ThinkPad-P14s-Gen-4:@/tmp/.ICE-unix/1925,unix/niles-ThinkPad-P14s-Gen-4:/tmp/.ICE-unix/1925', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/653bc12c_d78f_4667_8f8d_3318014b2bcb', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'CONDA_PREFIX_1': '/home/niles/miniforge3', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.6JLL22', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.153', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'CONDA_PYTHON_EXE': '/home/niles/miniforge3/bin/python', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'GEM_HOME': '/home/niles/gems', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CONDA_DEFAULT_ENV': 'rss', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/niles/ros2_ws/build/roboteq_controller', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'CONDA_EXE': '/home/niles/miniforge3/bin/conda', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'CONDA_PREFIX': '/home/niles/miniforge3/envs/rss', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy:/home/niles/ros2_ws/install/serial:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}), 'shell': False}
+[0.038560] (roboteq_controller) StdoutLine: {'line': b'-- Found ament_cmake: 2.5.3 (/opt/ros/jazzy/share/ament_cmake/cmake)\n'}
+[0.099427] (-) TimerEvent: {}
+[0.199791] (-) TimerEvent: {}
+[0.223997] (roboteq_controller) StdoutLine: {'line': b'-- Found rclcpp: 28.1.6 (/opt/ros/jazzy/share/rclcpp/cmake)\n'}
+[0.241835] (roboteq_controller) StdoutLine: {'line': b'-- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)\n'}
+[0.247031] (roboteq_controller) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)\n'}
+[0.253597] (roboteq_controller) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.261202] (roboteq_controller) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.297743] (roboteq_controller) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 7.3.1 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)\n'}
+[0.298419] (roboteq_controller) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 8.4.1 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.299926] (-) TimerEvent: {}
+[0.344778] (roboteq_controller) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.392285] (roboteq_controller) StdoutLine: {'line': b'-- Found serial: 1.2.1 (/home/niles/ros2_ws/install/serial/share/serial/cmake)\n'}
+[0.393695] (roboteq_controller) StdoutLine: {'line': b'-- Found std_msgs: 5.3.5 (/opt/ros/jazzy/share/std_msgs/cmake)\n'}
+[0.400034] (-) TimerEvent: {}
+[0.407069] (roboteq_controller) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.17.1 (/opt/ros/jazzy/share/ament_lint_auto/cmake)\n'}
+[0.473593] (roboteq_controller) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[0.473832] (roboteq_controller) StdoutLine: {'line': b'-- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/niles/ros2_ws/src/roboteq_controller/include>\n'}
+[0.473924] (roboteq_controller) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[0.474467] (roboteq_controller) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[0.474616] (roboteq_controller) StdoutLine: {'line': b"-- Configured 'flake8' exclude dirs and/or files: \n"}
+[0.475870] (roboteq_controller) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[0.476655] (roboteq_controller) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257\n"}
+[0.481092] (roboteq_controller) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[0.481247] (roboteq_controller) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[0.481784] (roboteq_controller) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[0.482962] (roboteq_controller) StdoutLine: {'line': b'-- Configuring done (0.4s)\n'}
+[0.492769] (roboteq_controller) StdoutLine: {'line': b'-- Generating done (0.0s)\n'}
+[0.495041] (roboteq_controller) StdoutLine: {'line': b'-- Build files have been written to: /home/niles/ros2_ws/build/roboteq_controller\n'}
+[0.500103] (-) TimerEvent: {}
+[0.539938] (roboteq_controller) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o\x1b[0m\n'}
+[0.600254] (-) TimerEvent: {}
+[0.700598] (-) TimerEvent: {}
+[0.800967] (-) TimerEvent: {}
+[0.901326] (-) TimerEvent: {}
+[1.001685] (-) TimerEvent: {}
+[1.102050] (-) TimerEvent: {}
+[1.202414] (-) TimerEvent: {}
+[1.302774] (-) TimerEvent: {}
+[1.403156] (-) TimerEvent: {}
+[1.503525] (-) TimerEvent: {}
+[1.603891] (-) TimerEvent: {}
+[1.704354] (-) TimerEvent: {}
+[1.804729] (-) TimerEvent: {}
+[1.905101] (-) TimerEvent: {}
+[1.981386] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KSpeedControlNode::\x1b[01;32m\x1b[KSpeedControlNode\x1b[m\x1b[K()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.981680] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:49:21:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KSpeedControlNode::port_\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.981786] (roboteq_controller) StderrLine: {'line': b'   49 |         std::string \x1b[01;35m\x1b[Kport_\x1b[m\x1b[K;\n'}
+[1.981863] (roboteq_controller) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K^~~~~\x1b[m\x1b[K\n'}
+[1.981931] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:48:13:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kint SpeedControlNode::baudrate_\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.981994] (roboteq_controller) StderrLine: {'line': b'   48 |         int \x1b[01;35m\x1b[Kbaudrate_\x1b[m\x1b[K;\n'}
+[1.982022] (roboteq_controller) StderrLine: {'line': b'      |             \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[1.982050] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:16:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.982079] (roboteq_controller) StderrLine: {'line': b'   16 |         \x1b[01;35m\x1b[KSpeedControlNode\x1b[m\x1b[K() : Node("speed_control_node"), port_("/dev/ttyACM0"), baudrate_(115200), motor_1_channel_(1), motor_2_channel_(2)\n'}
+[1.982106] (roboteq_controller) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.982137] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:48:13:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KSpeedControlNode::baudrate_\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.982167] (roboteq_controller) StderrLine: {'line': b'   48 |         int \x1b[01;35m\x1b[Kbaudrate_\x1b[m\x1b[K;\n'}
+[1.982192] (roboteq_controller) StderrLine: {'line': b'      |             \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[1.982217] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:46:13:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kint SpeedControlNode::motor_1_channel_\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.982244] (roboteq_controller) StderrLine: {'line': b'   46 |         int \x1b[01;35m\x1b[Kmotor_1_channel_\x1b[m\x1b[K;\n'}
+[1.982269] (roboteq_controller) StderrLine: {'line': b'      |             \x1b[01;35m\x1b[K^~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.982294] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:16:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.982324] (roboteq_controller) StderrLine: {'line': b'   16 |         \x1b[01;35m\x1b[KSpeedControlNode\x1b[m\x1b[K() : Node("speed_control_node"), port_("/dev/ttyACM0"), baudrate_(115200), motor_1_channel_(1), motor_2_channel_(2)\n'}
+[1.982350] (roboteq_controller) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.995252] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid SpeedControlNode::\x1b[01;32m\x1b[Kset_speed\x1b[m\x1b[K(std_msgs::msg::Int32MultiArray_<std::allocator<void> >::SharedPtr)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.995445] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:105:41:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kcannot convert \xe2\x80\x98\x1b[01m\x1b[Kstd_msgs::msg::Int32MultiArray_<std::allocator<void> >::_data_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<int>\x1b[m\x1b[K\xe2\x80\x99} to \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 in initialization\n'}
+[1.995541] (roboteq_controller) StderrLine: {'line': b'  105 |                 int target_speed = \x1b[01;31m\x1b[Kmsg->data\x1b[m\x1b[K;\n'}
+[1.995621] (roboteq_controller) StderrLine: {'line': b'      |                                    \x1b[01;31m\x1b[K~~~~~^~~~\x1b[m\x1b[K\n'}
+[1.995688] (roboteq_controller) StderrLine: {'line': b'      |                                         \x1b[01;31m\x1b[K|\x1b[m\x1b[K\n'}
+[1.995752] (roboteq_controller) StderrLine: {'line': b'      |                                         \x1b[01;31m\x1b[Kstd_msgs::msg::Int32MultiArray_<std::allocator<void> >::_data_type {aka std::vector<int>}\x1b[m\x1b[K\n'}
+[2.005757] (-) TimerEvent: {}
+[2.008803] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:106:68:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kmotor_channel_\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98\x1b[01m\x1b[Kmotor_1_channel_\x1b[m\x1b[K\xe2\x80\x99?\n'}
+[2.008934] (roboteq_controller) StderrLine: {'line': b'  106 |          std::string speed_command = "!S " + std::to_string(\x1b[01;31m\x1b[Kmotor_channel_\x1b[m\x1b[K) + " " + std::to_string(target_speed) + "\\r\\n";\n'}
+[2.008987] (roboteq_controller) StderrLine: {'line': b'      |                                                             \x1b[01;31m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[2.009106] (roboteq_controller) StderrLine: {'line': b'      |                                                             \x1b[32m\x1b[Kmotor_1_channel_\x1b[m\x1b[K\n'}
+[2.015828] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:107:20:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kis_connected\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98\x1b[01m\x1b[Kdisconnect\x1b[m\x1b[K\xe2\x80\x99?\n'}
+[2.016002] (roboteq_controller) StderrLine: {'line': b'  107 |                 if(\x1b[01;31m\x1b[Kis_connected\x1b[m\x1b[K())\n'}
+[2.016101] (roboteq_controller) StderrLine: {'line': b'      |                    \x1b[01;31m\x1b[K^~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[2.016177] (roboteq_controller) StderrLine: {'line': b'      |                    \x1b[32m\x1b[Kdisconnect\x1b[m\x1b[K\n'}
+[2.016555] (roboteq_controller) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/opt/ros/jazzy/include/rclcpp/rclcpp/logging.hpp:24\x1b[m\x1b[K,\n'}
+[2.016703] (roboteq_controller) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/jazzy/include/rclcpp/rclcpp/copy_all_parameter_values.hpp:27\x1b[m\x1b[K,\n'}
+[2.016791] (roboteq_controller) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/jazzy/include/rclcpp/rclcpp/rclcpp.hpp:171\x1b[m\x1b[K,\n'}
+[2.016845] (roboteq_controller) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:5\x1b[m\x1b[K:\n'}
+[2.016873] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:110:53:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kformat \xe2\x80\x98\x1b[01m\x1b[K%d\x1b[m\x1b[K\xe2\x80\x99 expects argument of type \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99, but argument 5 has type \xe2\x80\x98\x1b[01m\x1b[Kstd_msgs::msg::Int32MultiArray_<std::allocator<void> >::_data_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<int>\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat=\x07-Wformat=\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[2.016919] (roboteq_controller) StderrLine: {'line': b'  110 |                     RCLCPP_INFO(this->get_logger(), \x1b[01;35m\x1b[K"Speed set to: %d"\x1b[m\x1b[K, msg->data);\n'}
+[2.016946] (roboteq_controller) StderrLine: {'line': b'      |                                                     \x1b[01;35m\x1b[K^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[2.016985] (roboteq_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:110:69:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kformat string is defined here\n'}
+[2.017015] (roboteq_controller) StderrLine: {'line': b'  110 |             RCLCPP_INFO(this->get_logger(), "Speed set to: \x1b[01;36m\x1b[K%d\x1b[m\x1b[K", msg->data);\n'}
+[2.017041] (roboteq_controller) StderrLine: {'line': b'      |                                                            \x1b[01;36m\x1b[K~^\x1b[m\x1b[K\n'}
+[2.017067] (roboteq_controller) StderrLine: {'line': b'      |                                                             \x1b[01;36m\x1b[K|\x1b[m\x1b[K\n'}
+[2.017092] (roboteq_controller) StderrLine: {'line': b'      |                                                             \x1b[01;36m\x1b[Kint\x1b[m\x1b[K\n'}
+[2.017118] (roboteq_controller) StderrLine: {'line': b'\n'}
+[2.105906] (-) TimerEvent: {}
+[2.206285] (-) TimerEvent: {}
+[2.306651] (-) TimerEvent: {}
+[2.407030] (-) TimerEvent: {}
+[2.507394] (-) TimerEvent: {}
+[2.607756] (-) TimerEvent: {}
+[2.708140] (-) TimerEvent: {}
+[2.808497] (-) TimerEvent: {}
+[2.908861] (-) TimerEvent: {}
+[3.009248] (-) TimerEvent: {}
+[3.109618] (-) TimerEvent: {}
+[3.210002] (-) TimerEvent: {}
+[3.310363] (-) TimerEvent: {}
+[3.410729] (-) TimerEvent: {}
+[3.511090] (-) TimerEvent: {}
+[3.611454] (-) TimerEvent: {}
+[3.618718] (roboteq_controller) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/speed_control_node.dir/build.make:76: CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o] Error 1\n'}
+[3.619129] (roboteq_controller) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/speed_control_node.dir/all] Error 2\n'}
+[3.619451] (roboteq_controller) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[3.622068] (roboteq_controller) CommandEnded: {'returncode': 2}
+[3.627647] (roboteq_controller) JobEnded: {'identifier': 'roboteq_controller', 'rc': 2}
+[3.638053] (-) EventReactorShutdown: {}

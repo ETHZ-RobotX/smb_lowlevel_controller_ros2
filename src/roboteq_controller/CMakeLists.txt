@@ -14,6 +14,10 @@ find_package(std_msgs REQUIRED)
 add_executable(speed_control_node src/speed_control_node.cpp)
 ament_target_dependencies(speed_control_node rclcpp serial std_msgs)
 
+target_include_directories(speed_control_node PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+
 install(TARGETS
   speed_control_node
   DESTINATION lib/${PROJECT_NAME})

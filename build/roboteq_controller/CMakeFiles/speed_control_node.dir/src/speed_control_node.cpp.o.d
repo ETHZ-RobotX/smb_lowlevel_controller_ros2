@@ -697,4 +697,5 @@ CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o: \
  /opt/ros/jazzy/include/std_msgs/std_msgs/msg/detail/multi_array_layout__traits.hpp \
  /opt/ros/jazzy/include/std_msgs/std_msgs/msg/detail/multi_array_dimension__traits.hpp \
  /opt/ros/jazzy/include/std_msgs/std_msgs/msg/detail/int32_multi_array__type_support.hpp \
- /opt/ros/jazzy/include/std_msgs/std_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+ /opt/ros/jazzy/include/std_msgs/std_msgs/msg/rosidl_generator_cpp__visibility_control.hpp \
+ /home/niles/ros2_ws/src/roboteq_controller/include/roboteq_controller/inter_process_communication.h

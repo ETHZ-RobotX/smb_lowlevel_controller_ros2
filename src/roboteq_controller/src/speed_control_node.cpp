@@ -6,6 +6,8 @@
 #include <serial/serial.h>
 #include <std_msgs/msg/int32_multi_array.hpp>
 
+#include "roboteq_controller/inter_process_communication.h"
+
 using namespace std::chrono_literals;
 
 class SpeedControlNode : public rclcpp::Node
@@ -27,11 +29,16 @@ class SpeedControlNode : public rclcpp::Node
             // Create a publisher - publishes the motor speed in RPM
             wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Int32MultiArray>("wheel_speed", 10);
             RCLCPP_INFO(this->get_logger(), "Publisher created");
-            // wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Int32>("target_speed", 10, std::bind(&SpeedControlNode::speed_callback, this, std::placeholders::_1));
+            wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Int32MultiArray>("target_speed", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
             publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::get_speed, this));
             RCLCPP_INFO(this->get_logger(), "Timer created");
-            timer_ = this->create_wall_timer(1s, std::bind(&SpeedControlNode::stream_rate, this));
+            freq_timer_ = this->create_wall_timer(1s, std::bind(&SpeedControlNode::stream_rate, this));
             
+        }
+
+        ~SpeedControlNode()
+        {
+            disconnect();
         }
     
     private:
@@ -47,9 +54,9 @@ class SpeedControlNode : public rclcpp::Node
         int count_ = 0;
 
         rclcpp::Publisher<std_msgs::msg::Int32MultiArray>::SharedPtr wheel_speed_publisher_;
-        // rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr wheel_speed_subscriber_;
+        rclcpp::Subscription<std_msgs::msg::Int32MultiArray>::SharedPtr wheel_speed_subscriber_;
         rclcpp::TimerBase::SharedPtr publish_timer_;
-        rclcpp::TimerBase::SharedPtr timer_;
+        rclcpp::TimerBase::SharedPtr freq_timer_;
 
         void connect()
         {
@@ -58,7 +65,7 @@ class SpeedControlNode : public rclcpp::Node
                 serial_ = std::make_unique<serial::Serial>(port_, baudrate_, serial::Timeout::simpleTimeout(1000));
                 RCLCPP_INFO(this->get_logger(), "Trying to open serial port %s", port_.c_str());
                 // serial_->open();
-                if(serial_->isOpen())
+                if(check_connection())
                 {
                     RCLCPP_INFO(this->get_logger(), "Serial port initialized");
                     state_ = 1;
@@ -71,19 +78,19 @@ class SpeedControlNode : public rclcpp::Node
                 else
                 {
                     RCLCPP_ERROR(this->get_logger(), "Serial port not open");
-                    state_ = 0;
+                    // state_ = 0;
                 }
             }
             catch(serial::IOException& e)
             {
                 RCLCPP_ERROR(this->get_logger(), "Unable to open port");
-                state_ = 0;
+                // state_ = 0;
             }
         }
 
         void disconnect()
         {
-            if(serial_ && serial_->isOpen())
+            if(check_connection())
             {
                 serial_->close();
                 RCLCPP_INFO(this->get_logger(), "Serial port closed");
@@ -91,29 +98,38 @@ class SpeedControlNode : public rclcpp::Node
             }
         }
 
-        // void speed_callback(const std_msgs::msg::Int32::SharedPtr msg)
-        // {
-        //     if(state_ == 1)
-        //     {
-        //         int target_speed = msg->data;
-        //         std::string speed_command = "!S " + std::to_string(motor_channel_) + " " + std::to_string(target_speed) + "\r\n";
-        //         if(is_connected())
-        //         {
-        //             serial_->write(speed_command);
-        //             RCLCPP_INFO(this->get_logger(), "Speed set to: %d", msg->data);
-        //         }
-        //     }
-        //     else
-        //     {
-        //         RCLCPP_ERROR(this->get_logger(), "Serial port not open");
-        //     }
-        // }
+        bool check_connection()
+        {
+            return serial_ && serial_->isOpen();
+        }
+
+        void set_speed(const std_msgs::msg::Int32MultiArray::SharedPtr msg)
+        {
+            if(check_connection())
+            {
+                int target_speed_1 = msg->data[0];
+                int target_speed_2 = msg->data[1];
+                std::string speed_command_1 = "!S 1 " + std::to_string(target_speed_1) + "\r\n";
+                std::string speed_command_2 = "!S 2 " + std::to_string(target_speed_2) + "\r\n";
+                if(check_connection())
+                {
+                    serial_->write(speed_command_1);
+                    serial_->write(speed_command_1);
+                    RCLCPP_INFO(this->get_logger(), "Speed 1 set to: %d", msg->data[0]);
+                    RCLCPP_INFO(this->get_logger(), "Speed 2 set to: %d", msg->data[1]);
+                }
+            }
+            else
+            {
+                RCLCPP_ERROR(this->get_logger(), "Serial port not open");
+            }
+        }
 
         void get_speed()
         {
             Speed speed;
             // RCLCPP_INFO(this->get_logger(), "Getting speed");
-            if(state_ == 1)
+            if(check_connection())
             {
                 serial_->flushInput();
                 std::string response = serial_->readline(100, "\r");
@@ -159,7 +175,7 @@ class SpeedControlNode : public rclcpp::Node
 
         void stream_rate()
         {
-            if(state_ == 1)
+            if(check_connection())
             {
                 RCLCPP_INFO(this->get_logger(), "Stream rate: %d", count_);
                 count_ = 0;
