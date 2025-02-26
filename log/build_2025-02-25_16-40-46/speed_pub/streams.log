@@ -1,0 +1,11 @@
+[0.010s] Invoking command in '/home/niles/ros2_ws/build/speed_pub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/niles/ros2_ws/build/speed_pub -- -j16 -l16
+[0.072s] [ 50%] [32mBuilding CXX object CMakeFiles/speed_pub_node.dir/src/speed_pub_node.cpp.o[0m
+[1.618s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:[m[K In constructor ‘[01m[KSpeedPubNode::[01;32m[KSpeedPubNode[m[K()[m[K’:
+[1.619s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:19:13:[m[K [01;31m[Kerror: [m[K‘[01m[Krc_input_subscriber_[m[K’ was not declared in this scope; did you mean ‘[01m[Kcount_subscribers[m[K’?
+[1.619s]    19 |             [01;31m[Krc_input_subscriber_[m[K = this->create_subscription<geometry_msgs::msg::Twist>("rc_input", 10, std::bind(&SpeedPubNode::wheel_speed_calc, this, std::placeholders::_1));
+[1.619s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[1.619s]       |             [32m[Kcount_subscribers[m[K
+[3.354s] gmake[2]: *** [CMakeFiles/speed_pub_node.dir/build.make:76: CMakeFiles/speed_pub_node.dir/src/speed_pub_node.cpp.o] Error 1
+[3.354s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/speed_pub_node.dir/all] Error 2
+[3.355s] gmake: *** [Makefile:146: all] Error 2
+[3.358s] Invoked command in '/home/niles/ros2_ws/build/speed_pub' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/niles/ros2_ws/build/speed_pub -- -j16 -l16

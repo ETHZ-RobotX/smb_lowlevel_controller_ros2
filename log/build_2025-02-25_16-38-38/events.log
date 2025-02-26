@@ -1,0 +1,118 @@
+[0.000000] (-) TimerEvent: {}
+[0.000211] (-) JobUnselected: {'identifier': 'robosense_description'}
+[0.000259] (-) JobUnselected: {'identifier': 'robosense_gazebo_plugins'}
+[0.000284] (-) JobUnselected: {'identifier': 'roboteq_controller'}
+[0.000304] (-) JobUnselected: {'identifier': 'serial'}
+[0.000336] (-) JobUnselected: {'identifier': 'smb_description'}
+[0.000381] (-) JobUnselected: {'identifier': 'smb_driver'}
+[0.000399] (-) JobUnselected: {'identifier': 'smb_lowlevel_controller'}
+[0.000421] (speed_pub) JobQueued: {'identifier': 'speed_pub', 'dependencies': OrderedDict()}
+[0.000444] (speed_pub) JobStarted: {'identifier': 'speed_pub'}
+[0.008029] (speed_pub) JobProgress: {'identifier': 'speed_pub', 'progress': 'cmake'}
+[0.008725] (speed_pub) JobProgress: {'identifier': 'speed_pub', 'progress': 'build'}
+[0.008789] (speed_pub) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/niles/ros2_ws/build/speed_pub', '--', '-j16', '-l16'], 'cwd': '/home/niles/ros2_ws/build/speed_pub', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'CONDA_PROMPT_MODIFIER': '(rss)', 'USER': 'niles', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/niles', 'CONDA_SHLVL': '2', 'OLDPWD': '/home/niles', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2147', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', '_CE_M': '', 'GNOME_KEYRING_CONTROL': '/run/user/1000/keyring', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'niles', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.SettingsDaemon.MediaKeys.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'niles', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', '_CE_CONDA': '', 'PATH': '/home/niles/gems/bin:/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/home/niles/miniforge3/envs/rss/bin:/home/niles/miniforge3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/niles-ThinkPad-P14s-Gen-4:@/tmp/.ICE-unix/1920,unix/niles-ThinkPad-P14s-Gen-4:/tmp/.ICE-unix/1920', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/82cf1649_c56c_4ee8_bb89_ee15d0b24dfb', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'CONDA_PREFIX_1': '/home/niles/miniforge3', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.AU1E22', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.113', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'CONDA_PYTHON_EXE': '/home/niles/miniforge3/bin/python', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'GEM_HOME': '/home/niles/gems', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CONDA_DEFAULT_ENV': 'rss', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/niles/ros2_ws/build/speed_pub', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'CONDA_EXE': '/home/niles/miniforge3/bin/conda', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'CONDA_PREFIX': '/home/niles/miniforge3/envs/rss', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[0.070390] (speed_pub) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/speed_pub_node.dir/src/speed_pub_node.cpp.o\x1b[0m\n'}
+[0.099415] (-) TimerEvent: {}
+[0.199810] (-) TimerEvent: {}
+[0.300225] (-) TimerEvent: {}
+[0.400556] (-) TimerEvent: {}
+[0.500975] (-) TimerEvent: {}
+[0.601340] (-) TimerEvent: {}
+[0.701704] (-) TimerEvent: {}
+[0.802125] (-) TimerEvent: {}
+[0.902584] (-) TimerEvent: {}
+[1.002956] (-) TimerEvent: {}
+[1.103310] (-) TimerEvent: {}
+[1.203662] (-) TimerEvent: {}
+[1.304077] (-) TimerEvent: {}
+[1.404545] (-) TimerEvent: {}
+[1.504931] (-) TimerEvent: {}
+[1.605335] (-) TimerEvent: {}
+[1.705813] (-) TimerEvent: {}
+[1.806192] (-) TimerEvent: {}
+[1.851253] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:26:38:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KInt32MultiArray\x1b[m\x1b[K\xe2\x80\x99 is not a member of \xe2\x80\x98\x1b[01m\x1b[Kstd_msgs::msg\x1b[m\x1b[K\xe2\x80\x99; did you mean \xe2\x80\x98\x1b[01m\x1b[KFloat64MultiArray\x1b[m\x1b[K\xe2\x80\x99?\n'}
+[1.851515] (speed_pub) StderrLine: {'line': b'   26 |     rclcpp::Publisher<std_msgs::msg::\x1b[01;31m\x1b[KInt32MultiArray\x1b[m\x1b[K>::SharedPtr target_speed_publisher_;\n'}
+[1.851559] (speed_pub) StderrLine: {'line': b'      |                                      \x1b[01;31m\x1b[K^~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.851594] (speed_pub) StderrLine: {'line': b'      |                                      \x1b[32m\x1b[KFloat64MultiArray\x1b[m\x1b[K\n'}
+[1.851629] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:26:53:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Ktemplate argument 1 is invalid\n'}
+[1.851662] (speed_pub) StderrLine: {'line': b'   26 |     rclcpp::Publisher<std_msgs::msg::Int32MultiArray\x1b[01;31m\x1b[K>\x1b[m\x1b[K::SharedPtr target_speed_publisher_;\n'}
+[1.851693] (speed_pub) StderrLine: {'line': b'      |                                                     \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[1.851722] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:26:56:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kexpected \xe2\x80\x98\x1b[01m\x1b[K;\x1b[m\x1b[K\xe2\x80\x99 at end of member declaration\n'}
+[1.851754] (speed_pub) StderrLine: {'line': b'   26 |     rclcpp::Publisher<std_msgs::msg::Int32MultiArray>::\x1b[01;31m\x1b[KSharedPtr\x1b[m\x1b[K target_speed_publisher_;\n'}
+[1.851784] (speed_pub) StderrLine: {'line': b'      |                                                        \x1b[01;31m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[1.851815] (speed_pub) StderrLine: {'line': b'      |                                                                 \x1b[32m\x1b[K;\x1b[m\x1b[K\n'}
+[1.854990] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:26:66:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Ktarget_speed_publisher_\x1b[m\x1b[K\xe2\x80\x99 does not name a type\n'}
+[1.855186] (speed_pub) StderrLine: {'line': b'   26 | clcpp::Publisher<std_msgs::msg::Int32MultiArray>::SharedPtr \x1b[01;31m\x1b[Ktarget_speed_publisher_\x1b[m\x1b[K;\n'}
+[1.855290] (speed_pub) StderrLine: {'line': b'      |                                                             \x1b[01;31m\x1b[K^~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.855379] (speed_pub) StderrLine: {'line': b'\n'}
+[1.864937] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KSpeedPubNode::\x1b[01;32m\x1b[KSpeedPubNode\x1b[m\x1b[K()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.865161] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:18:13:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Ktarget_speed_publisher_\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope\n'}
+[1.865272] (speed_pub) StderrLine: {'line': b'   18 |             \x1b[01;31m\x1b[Ktarget_speed_publisher_\x1b[m\x1b[K = this->create_publisher<std_msgs::msg::Float64MultiArray>("target_speed", 10);\n'}
+[1.865362] (speed_pub) StderrLine: {'line': b'      |             \x1b[01;31m\x1b[K^~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.874590] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:19:13:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Krc_input_subscriber_\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98\x1b[01m\x1b[Kcount_subscribers\x1b[m\x1b[K\xe2\x80\x99?\n'}
+[1.874947] (speed_pub) StderrLine: {'line': b'   19 |             \x1b[01;31m\x1b[Krc_input_subscriber_\x1b[m\x1b[K = this->create_subscription<geometry_msgs::msg::Twist>("rc_input", 10, std::bind(&SpeedPubNode::wheel_speed_calc, this, std::placeholders::_1));\n'}
+[1.875067] (speed_pub) StderrLine: {'line': b'      |             \x1b[01;31m\x1b[K^~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.875158] (speed_pub) StderrLine: {'line': b'      |             \x1b[32m\x1b[Kcount_subscribers\x1b[m\x1b[K\n'}
+[1.906300] (-) TimerEvent: {}
+[1.912491] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid SpeedPubNode::\x1b[01;32m\x1b[Ktimer_callback\x1b[m\x1b[K()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.912693] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:43:34:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kleft_speed\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98\x1b[01m\x1b[Kleft_speed_\x1b[m\x1b[K\xe2\x80\x99?\n'}
+[1.912787] (speed_pub) StderrLine: {'line': b'   43 |         target_speed_msg.data = {\x1b[01;31m\x1b[Kleft_speed\x1b[m\x1b[K, right_speed};\n'}
+[1.912869] (speed_pub) StderrLine: {'line': b'      |                                  \x1b[01;31m\x1b[K^~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.912956] (speed_pub) StderrLine: {'line': b'      |                                  \x1b[32m\x1b[Kleft_speed_\x1b[m\x1b[K\n'}
+[1.916013] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:43:46:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kright_speed\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98\x1b[01m\x1b[Kright_speed_\x1b[m\x1b[K\xe2\x80\x99?\n'}
+[1.916676] (speed_pub) StderrLine: {'line': b'   43 |         target_speed_msg.data = {left_speed, \x1b[01;31m\x1b[Kright_speed\x1b[m\x1b[K};\n'}
+[1.916782] (speed_pub) StderrLine: {'line': b'      |                                              \x1b[01;31m\x1b[K^~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.916867] (speed_pub) StderrLine: {'line': b'      |                                              \x1b[32m\x1b[Kright_speed_\x1b[m\x1b[K\n'}
+[1.917014] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:43:57:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kno match for \xe2\x80\x98\x1b[01m\x1b[Koperator=\x1b[m\x1b[K\xe2\x80\x99 (operand types are \xe2\x80\x98\x1b[01m\x1b[Kstd_msgs::msg::Float64MultiArray_<std::allocator<void> >::_data_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<double, std::allocator<double> >\x1b[m\x1b[K\xe2\x80\x99} and \xe2\x80\x98\x1b[01m\x1b[K<brace-enclosed initializer list>\x1b[m\x1b[K\xe2\x80\x99)\n'}
+[1.917135] (speed_pub) StderrLine: {'line': b'   43 |         target_speed_msg.data = {left_speed, right_speed\x1b[01;31m\x1b[K}\x1b[m\x1b[K;\n'}
+[1.917187] (speed_pub) StderrLine: {'line': b'      |                                                         \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[1.917217] (speed_pub) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/usr/include/c++/13/vector:72\x1b[m\x1b[K,\n'}
+[1.917245] (speed_pub) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/usr/include/c++/13/functional:64\x1b[m\x1b[K,\n'}
+[1.917274] (speed_pub) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:2\x1b[m\x1b[K:\n'}
+[1.917303] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/c++/13/bits/vector.tcc:210:5:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kcandidate: \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::\x1b[01;32m\x1b[Koperator=\x1b[m\x1b[K(const std::vector<_Tp, _Alloc>&) \x1b[35m\x1b[K[with _Tp = double; _Alloc = std::allocator<double>]\x1b[m\x1b[K\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.917333] (speed_pub) StderrLine: {'line': b'  210 |     \x1b[01;36m\x1b[Kvector<_Tp, _Alloc>\x1b[m\x1b[K::\n'}
+[1.917366] (speed_pub) StderrLine: {'line': b'      |     \x1b[01;36m\x1b[K^~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.917394] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/c++/13/bits/vector.tcc:211:42:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[K  no known conversion for argument 1 from \xe2\x80\x98\x1b[01m\x1b[K<brace-enclosed initializer list>\x1b[m\x1b[K\xe2\x80\x99 to \xe2\x80\x98\x1b[01m\x1b[Kconst std::vector<double, std::allocator<double> >&\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.917423] (speed_pub) StderrLine: {'line': b'  211 |     operator=(\x1b[01;36m\x1b[Kconst vector<_Tp, _Alloc>& __x\x1b[m\x1b[K)\n'}
+[1.917450] (speed_pub) StderrLine: {'line': b'      |               \x1b[01;36m\x1b[K~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~\x1b[m\x1b[K\n'}
+[1.917479] (speed_pub) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/usr/include/c++/13/vector:66\x1b[m\x1b[K:\n'}
+[1.917507] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/c++/13/bits/stl_vector.h:766:7:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kcandidate: \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::\x1b[01;32m\x1b[Koperator=\x1b[m\x1b[K(std::vector<_Tp, _Alloc>&&) \x1b[35m\x1b[K[with _Tp = double; _Alloc = std::allocator<double>]\x1b[m\x1b[K\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.917541] (speed_pub) StderrLine: {'line': b'  766 |       \x1b[01;36m\x1b[Koperator\x1b[m\x1b[K=(vector&& __x) noexcept(_Alloc_traits::_S_nothrow_move())\n'}
+[1.917570] (speed_pub) StderrLine: {'line': b'      |       \x1b[01;36m\x1b[K^~~~~~~~\x1b[m\x1b[K\n'}
+[1.917597] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/c++/13/bits/stl_vector.h:766:26:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[K  no known conversion for argument 1 from \xe2\x80\x98\x1b[01m\x1b[K<brace-enclosed initializer list>\x1b[m\x1b[K\xe2\x80\x99 to \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<double, std::allocator<double> >&&\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.917625] (speed_pub) StderrLine: {'line': b'  766 |       operator=(\x1b[01;36m\x1b[Kvector&& __x\x1b[m\x1b[K) noexcept(_Alloc_traits::_S_nothrow_move())\n'}
+[1.917653] (speed_pub) StderrLine: {'line': b'      |                 \x1b[01;36m\x1b[K~~~~~~~~~^~~\x1b[m\x1b[K\n'}
+[1.917680] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/c++/13/bits/stl_vector.h:788:7:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kcandidate: \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::\x1b[01;32m\x1b[Koperator=\x1b[m\x1b[K(std::initializer_list<_Tp>) \x1b[35m\x1b[K[with _Tp = double; _Alloc = std::allocator<double>]\x1b[m\x1b[K\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.917709] (speed_pub) StderrLine: {'line': b'  788 |       \x1b[01;36m\x1b[Koperator\x1b[m\x1b[K=(initializer_list<value_type> __l)\n'}
+[1.917737] (speed_pub) StderrLine: {'line': b'      |       \x1b[01;36m\x1b[K^~~~~~~~\x1b[m\x1b[K\n'}
+[1.917764] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/c++/13/bits/stl_vector.h:788:46:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[K  no known conversion for argument 1 from \xe2\x80\x98\x1b[01m\x1b[K<brace-enclosed initializer list>\x1b[m\x1b[K\xe2\x80\x99 to \xe2\x80\x98\x1b[01m\x1b[Kstd::initializer_list<double>\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.917792] (speed_pub) StderrLine: {'line': b'  788 |       operator=(\x1b[01;36m\x1b[Kinitializer_list<value_type> __l\x1b[m\x1b[K)\n'}
+[1.917819] (speed_pub) StderrLine: {'line': b'      |                 \x1b[01;36m\x1b[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~\x1b[m\x1b[K\n'}
+[1.923786] (speed_pub) StderrLine: {'line': b'\x1b[01m\x1b[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:45:9:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Ktarget_speed_publisher_\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope\n'}
+[1.923924] (speed_pub) StderrLine: {'line': b'   45 |         \x1b[01;31m\x1b[Ktarget_speed_publisher_\x1b[m\x1b[K->publish(target_speed_msg);\n'}
+[1.924016] (speed_pub) StderrLine: {'line': b'      |         \x1b[01;31m\x1b[K^~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[2.006428] (-) TimerEvent: {}
+[2.106738] (-) TimerEvent: {}
+[2.207123] (-) TimerEvent: {}
+[2.307489] (-) TimerEvent: {}
+[2.407847] (-) TimerEvent: {}
+[2.508225] (-) TimerEvent: {}
+[2.608634] (-) TimerEvent: {}
+[2.709107] (-) TimerEvent: {}
+[2.809510] (-) TimerEvent: {}
+[2.910023] (-) TimerEvent: {}
+[3.010477] (-) TimerEvent: {}
+[3.110889] (-) TimerEvent: {}
+[3.211365] (-) TimerEvent: {}
+[3.311736] (-) TimerEvent: {}
+[3.412095] (-) TimerEvent: {}
+[3.512477] (-) TimerEvent: {}
+[3.613031] (-) TimerEvent: {}
+[3.713627] (-) TimerEvent: {}
+[3.799537] (speed_pub) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/speed_pub_node.dir/build.make:76: CMakeFiles/speed_pub_node.dir/src/speed_pub_node.cpp.o] Error 1\n'}
+[3.799933] (speed_pub) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/speed_pub_node.dir/all] Error 2\n'}
+[3.800308] (speed_pub) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[3.802567] (speed_pub) CommandEnded: {'returncode': 2}
+[3.807485] (speed_pub) JobEnded: {'identifier': 'speed_pub', 'rc': 2}
+[3.813685] (-) TimerEvent: {}
+[3.817788] (-) EventReactorShutdown: {}

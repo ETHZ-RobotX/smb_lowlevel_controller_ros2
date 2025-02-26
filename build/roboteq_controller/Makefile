@@ -210,6 +210,30 @@ speed_control_node/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/speed_control_node.dir/build.make CMakeFiles/speed_control_node.dir/build
 .PHONY : speed_control_node/fast
 
+src/inter_process_communication.o: src/inter_process_communication.cpp.o
+.PHONY : src/inter_process_communication.o
+
+# target to build an object file
+src/inter_process_communication.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/speed_control_node.dir/build.make CMakeFiles/speed_control_node.dir/src/inter_process_communication.cpp.o
+.PHONY : src/inter_process_communication.cpp.o
+
+src/inter_process_communication.i: src/inter_process_communication.cpp.i
+.PHONY : src/inter_process_communication.i
+
+# target to preprocess a source file
+src/inter_process_communication.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/speed_control_node.dir/build.make CMakeFiles/speed_control_node.dir/src/inter_process_communication.cpp.i
+.PHONY : src/inter_process_communication.cpp.i
+
+src/inter_process_communication.s: src/inter_process_communication.cpp.s
+.PHONY : src/inter_process_communication.s
+
+# target to generate assembly for a file
+src/inter_process_communication.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/speed_control_node.dir/build.make CMakeFiles/speed_control_node.dir/src/inter_process_communication.cpp.s
+.PHONY : src/inter_process_communication.cpp.s
+
 src/speed_control_node.o: src/speed_control_node.cpp.o
 .PHONY : src/speed_control_node.o
 
@@ -250,6 +274,9 @@ help:
 	@echo "... roboteq_controller_uninstall"
 	@echo "... uninstall"
 	@echo "... speed_control_node"
+	@echo "... src/inter_process_communication.o"
+	@echo "... src/inter_process_communication.i"
+	@echo "... src/inter_process_communication.s"
 	@echo "... src/speed_control_node.o"
 	@echo "... src/speed_control_node.i"
 	@echo "... src/speed_control_node.s"

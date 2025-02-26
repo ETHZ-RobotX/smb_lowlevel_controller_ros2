@@ -1,0 +1,105 @@
+[0.008s] Invoking command in '/home/niles/ros2_ws/build/speed_pub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/niles/ros2_ws/src/speed_pub -DCMAKE_INSTALL_PREFIX=/home/niles/ros2_ws/install/speed_pub
+[0.049s] -- The C compiler identification is GNU 13.3.0
+[0.091s] -- The CXX compiler identification is GNU 13.3.0
+[0.105s] -- Detecting C compiler ABI info
+[0.186s] -- Detecting C compiler ABI info - done
+[0.192s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.192s] -- Detecting C compile features
+[0.192s] -- Detecting C compile features - done
+[0.200s] -- Detecting CXX compiler ABI info
+[0.285s] -- Detecting CXX compiler ABI info - done
+[0.292s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.292s] -- Detecting CXX compile features
+[0.292s] -- Detecting CXX compile features - done
+[0.295s] -- Found ament_cmake: 2.5.3 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.442s] -- Found Python3: /home/niles/miniforge3/envs/rss/bin/python3 (found version "3.9.21") found components: Interpreter 
+[0.522s] -- Found rclcpp: 28.1.6 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.560s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.573s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.587s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.603s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.667s] -- Found rmw_implementation_cmake: 7.3.1 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.671s] -- Found rmw_fastrtps_cpp: 8.4.1 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.756s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[0.777s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[0.801s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.869s] -- Found std_msgs: 5.3.5 (/opt/ros/jazzy/share/std_msgs/cmake)
+[0.883s] -- Found geometry_msgs: 5.3.5 (/opt/ros/jazzy/share/geometry_msgs/cmake)
+[0.900s] -- Found ament_lint_auto: 0.17.1 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[0.974s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.974s] -- Configured cppcheck include dirs: 
+[0.974s] -- Configured cppcheck exclude dirs and/or files: 
+[0.975s] -- Added test 'lint_cmake' to check CMake code style
+[0.976s] -- Added test 'uncrustify' to check C / C++ code style
+[0.976s] -- Configured uncrustify additional arguments: 
+[0.976s] -- Added test 'xmllint' to check XML markup files
+[0.977s] -- Configuring done (1.0s)
+[0.986s] -- Generating done (0.0s)
+[0.988s] -- Build files have been written to: /home/niles/ros2_ws/build/speed_pub
+[0.998s] Invoked command in '/home/niles/ros2_ws/build/speed_pub' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/niles/ros2_ws/src/speed_pub -DCMAKE_INSTALL_PREFIX=/home/niles/ros2_ws/install/speed_pub
+[0.999s] Invoking command in '/home/niles/ros2_ws/build/speed_pub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/niles/ros2_ws/build/speed_pub -- -j16 -l16
+[1.051s] [ 50%] [32mBuilding CXX object CMakeFiles/speed_pub_node.dir/src/speed_pub_node.cpp.o[0m
+[2.726s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:26:38:[m[K [01;31m[Kerror: [m[K‘[01m[KInt32MultiArray[m[K’ is not a member of ‘[01m[Kstd_msgs::msg[m[K’; did you mean ‘[01m[KFloat64MultiArray[m[K’?
+[2.726s]    26 |     rclcpp::Publisher<std_msgs::msg::[01;31m[KInt32MultiArray[m[K>::SharedPtr target_speed_publisher_;
+[2.727s]       |                                      [01;31m[K^~~~~~~~~~~~~~~[m[K
+[2.727s]       |                                      [32m[KFloat64MultiArray[m[K
+[2.727s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:26:53:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[2.727s]    26 |     rclcpp::Publisher<std_msgs::msg::Int32MultiArray[01;31m[K>[m[K::SharedPtr target_speed_publisher_;
+[2.727s]       |                                                     [01;31m[K^[m[K
+[2.727s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:26:56:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ at end of member declaration
+[2.727s]    26 |     rclcpp::Publisher<std_msgs::msg::Int32MultiArray>::[01;31m[KSharedPtr[m[K target_speed_publisher_;
+[2.727s]       |                                                        [01;31m[K^~~~~~~~~[m[K
+[2.727s]       |                                                                 [32m[K;[m[K
+[2.729s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:26:66:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_speed_publisher_[m[K’ does not name a type
+[2.729s]    26 | clcpp::Publisher<std_msgs::msg::Int32MultiArray>::SharedPtr [01;31m[Ktarget_speed_publisher_[m[K;
+[2.729s]       |                                                             [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.730s] 
+[2.739s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:[m[K In constructor ‘[01m[KSpeedPubNode::[01;32m[KSpeedPubNode[m[K()[m[K’:
+[2.739s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:18:13:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_speed_publisher_[m[K’ was not declared in this scope
+[2.739s]    18 |             [01;31m[Ktarget_speed_publisher_[m[K = this->create_publisher<std_msgs::msg::Float64MultiArray>("target_speed", 10);
+[2.739s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.748s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:19:13:[m[K [01;31m[Kerror: [m[K‘[01m[Krc_input_subscriber_[m[K’ was not declared in this scope; did you mean ‘[01m[Kcount_subscribers[m[K’?
+[2.748s]    19 |             [01;31m[Krc_input_subscriber_[m[K = this->create_subscription<geometry_msgs::msg::Twist>("rc_input", 10, std::bind(&SpeedPubNode::wheel_speed_calc, this, std::placeholders::_1));
+[2.748s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[2.748s]       |             [32m[Kcount_subscribers[m[K
+[2.781s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:[m[K In member function ‘[01m[Kvoid SpeedPubNode::[01;32m[Ktimer_callback[m[K()[m[K’:
+[2.781s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:43:34:[m[K [01;31m[Kerror: [m[K‘[01m[Kleft_speed[m[K’ was not declared in this scope; did you mean ‘[01m[Kleft_speed_[m[K’?
+[2.781s]    43 |         target_speed_msg.data = {[01;31m[Kleft_speed[m[K, right_speed};
+[2.781s]       |                                  [01;31m[K^~~~~~~~~~[m[K
+[2.781s]       |                                  [32m[Kleft_speed_[m[K
+[2.785s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:43:46:[m[K [01;31m[Kerror: [m[K‘[01m[Kright_speed[m[K’ was not declared in this scope; did you mean ‘[01m[Kright_speed_[m[K’?
+[2.785s]    43 |         target_speed_msg.data = {left_speed, [01;31m[Kright_speed[m[K};
+[2.785s]       |                                              [01;31m[K^~~~~~~~~~~[m[K
+[2.785s]       |                                              [32m[Kright_speed_[m[K
+[2.786s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:43:57:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator=[m[K’ (operand types are ‘[01m[Kstd_msgs::msg::Float64MultiArray_<std::allocator<void> >::_data_type[m[K’ {aka ‘[01m[Kstd::vector<double, std::allocator<double> >[m[K’} and ‘[01m[K<brace-enclosed initializer list>[m[K’)
+[2.786s]    43 |         target_speed_msg.data = {left_speed, right_speed[01;31m[K}[m[K;
+[2.786s]       |                                                         [01;31m[K^[m[K
+[2.786s] In file included from [01m[K/usr/include/c++/13/vector:72[m[K,
+[2.786s]                  from [01m[K/usr/include/c++/13/functional:64[m[K,
+[2.786s]                  from [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:2[m[K:
+[2.786s] [01m[K/usr/include/c++/13/bits/vector.tcc:210:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::[01;32m[Koperator=[m[K(const std::vector<_Tp, _Alloc>&) [35m[K[with _Tp = double; _Alloc = std::allocator<double>][m[K[m[K’
+[2.786s]   210 |     [01;36m[Kvector<_Tp, _Alloc>[m[K::
+[2.786s]       |     [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+[2.786s] [01m[K/usr/include/c++/13/bits/vector.tcc:211:42:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[K<brace-enclosed initializer list>[m[K’ to ‘[01m[Kconst std::vector<double, std::allocator<double> >&[m[K’
+[2.786s]   211 |     operator=([01;36m[Kconst vector<_Tp, _Alloc>& __x[m[K)
+[2.786s]       |               [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~[m[K
+[2.786s] In file included from [01m[K/usr/include/c++/13/vector:66[m[K:
+[2.786s] [01m[K/usr/include/c++/13/bits/stl_vector.h:766:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::[01;32m[Koperator=[m[K(std::vector<_Tp, _Alloc>&&) [35m[K[with _Tp = double; _Alloc = std::allocator<double>][m[K[m[K’
+[2.786s]   766 |       [01;36m[Koperator[m[K=(vector&& __x) noexcept(_Alloc_traits::_S_nothrow_move())
+[2.786s]       |       [01;36m[K^~~~~~~~[m[K
+[2.786s] [01m[K/usr/include/c++/13/bits/stl_vector.h:766:26:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[K<brace-enclosed initializer list>[m[K’ to ‘[01m[Kstd::vector<double, std::allocator<double> >&&[m[K’
+[2.787s]   766 |       operator=([01;36m[Kvector&& __x[m[K) noexcept(_Alloc_traits::_S_nothrow_move())
+[2.787s]       |                 [01;36m[K~~~~~~~~~^~~[m[K
+[2.787s] [01m[K/usr/include/c++/13/bits/stl_vector.h:788:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::[01;32m[Koperator=[m[K(std::initializer_list<_Tp>) [35m[K[with _Tp = double; _Alloc = std::allocator<double>][m[K[m[K’
+[2.787s]   788 |       [01;36m[Koperator[m[K=(initializer_list<value_type> __l)
+[2.787s]       |       [01;36m[K^~~~~~~~[m[K
+[2.787s] [01m[K/usr/include/c++/13/bits/stl_vector.h:788:46:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[K<brace-enclosed initializer list>[m[K’ to ‘[01m[Kstd::initializer_list<double>[m[K’
+[2.787s]   788 |       operator=([01;36m[Kinitializer_list<value_type> __l[m[K)
+[2.787s]       |                 [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~[m[K
+[2.794s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:45:9:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_speed_publisher_[m[K’ was not declared in this scope
+[2.794s]    45 |         [01;31m[Ktarget_speed_publisher_[m[K->publish(target_speed_msg);
+[2.794s]       |         [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[4.527s] gmake[2]: *** [CMakeFiles/speed_pub_node.dir/build.make:76: CMakeFiles/speed_pub_node.dir/src/speed_pub_node.cpp.o] Error 1
+[4.527s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/speed_pub_node.dir/all] Error 2
+[4.527s] gmake: *** [Makefile:146: all] Error 2
+[4.530s] Invoked command in '/home/niles/ros2_ws/build/speed_pub' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/niles/ros2_ws/build/speed_pub -- -j16 -l16

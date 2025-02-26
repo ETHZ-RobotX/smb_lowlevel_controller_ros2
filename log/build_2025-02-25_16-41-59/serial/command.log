@@ -1,0 +1,4 @@
+Invoking command in '/home/niles/ros2_ws/build/serial': CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/niles/ros2_ws/build/serial -- -j16 -l16
+Invoked command in '/home/niles/ros2_ws/build/serial' returned '0': CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/niles/ros2_ws/build/serial -- -j16 -l16
+Invoking command in '/home/niles/ros2_ws/build/serial': CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/niles/ros2_ws/build/serial
+Invoked command in '/home/niles/ros2_ws/build/serial' returned '0': CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/niles/ros2_ws/build/serial

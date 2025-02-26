@@ -4,7 +4,8 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include <serial/serial.h>
-#include <std_msgs/msg/int32_multi_array.hpp>
+#include <std_msgs/msg/float64_multi_array.hpp>
+#include <geometry_msgs/msg/twist.hpp>
 
 #include "roboteq_controller/inter_process_communication.h"
 
@@ -23,10 +24,11 @@ class SpeedControlNode : public rclcpp::Node
             connect();
             RCLCPP_INFO(this->get_logger(), "Attempting to create a publisher");
             // Create a publisher - publishes the motor speed in RPM
-            wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Int32MultiArray>("wheel_speed", 10);
+            wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_speed", 10);
+            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("rc_input", 10);
             RCLCPP_INFO(this->get_logger(), "Publisher created");
-            wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Int32MultiArray>("target_speed", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
-            publish_timer_ = this->create_wall_timer(20ms, std::bind(&SpeedControlNode::get_speed, this));
+            wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("target_speed", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
+            publish_timer_ = this->create_wall_timer(20ms, std::bind(&SpeedControlNode::read_info, this));
             RCLCPP_INFO(this->get_logger(), "Timer created");
             freq_timer_ = this->create_wall_timer(1s, std::bind(&SpeedControlNode::stream_rate, this));
             
@@ -48,9 +50,13 @@ class SpeedControlNode : public rclcpp::Node
         std::string delimiter_ = ":";
         int prefix_length_ = prefix_.length();
         int count_ = 0;
+        mutex_t mutex_;
+        double linear_scale_ = 1.0;
+        double angular_scale_ = 0.5;
 
-        rclcpp::Publisher<std_msgs::msg::Int32MultiArray>::SharedPtr wheel_speed_publisher_;
-        rclcpp::Subscription<std_msgs::msg::Int32MultiArray>::SharedPtr wheel_speed_subscriber_;
+        rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_publisher_;
+        rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr rc_input_publisher_;
+        rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_subscriber_;
         rclcpp::TimerBase::SharedPtr publish_timer_;
         rclcpp::TimerBase::SharedPtr freq_timer_;
 
@@ -66,11 +72,10 @@ class SpeedControlNode : public rclcpp::Node
                     RCLCPP_INFO(this->get_logger(), "Serial port initialized");
                     state_ = 1;
                     
-
                     std::string echo_query = "^ECHOF 1\r\n";
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", echo_query.c_str());
                     serial_->write(echo_query);
-                    std::string speed_query = "/\"d=\",\":\"?S " + std::to_string(motor_1_channel_) + "_?S " + std::to_string(motor_2_channel_) + "_# 10\r\n";
+                    std::string speed_query = "/\"d=\",\":\"?S " + std::to_string(motor_1_channel_) + "_?S " + std::to_string(motor_2_channel_) + "_?PI 1_?PI 2_# 10\r\n";
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", speed_query.c_str());
                     serial_->write(speed_query);
                     
@@ -100,17 +105,19 @@ class SpeedControlNode : public rclcpp::Node
 
         bool check_connection()
         {
+            
             return serial_ && serial_->isOpen();
         }
 
-        void set_speed(const std_msgs::msg::Int32MultiArray::SharedPtr msg)
+        void set_speed(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
         {
+            acquireMutex(mutex_, 10);
             if (check_connection())
             {
                 int target_speed_1 = msg->data[0];
                 int target_speed_2 = msg->data[1];
-                std::string speed_command = "!S 1 " + std::to_string(target_speed_1) + "\r" +
-                                            "!S 2 " + std::to_string(target_speed_2) + "\r\n";
+                std::string speed_command = "!S " + std::to_string(motor_1_channel_) + " " + std::to_string(target_speed_1) + "\r" +
+                                            "!S " + std::to_string(motor_2_channel_) + " " + std::to_string(target_speed_2) + "\r\n";
 
                 serial_->write(speed_command);
                 serial_->flush();
@@ -149,26 +156,32 @@ class SpeedControlNode : public rclcpp::Node
             {
                 RCLCPP_ERROR(this->get_logger(), "Serial port not open");
             }
+            releaseMutex(mutex_);
         }
 
 
-        void get_speed()
+        void read_info()
         {
-            Speed speed;
-            // RCLCPP_INFO(this->get_logger(), "Getting speed");
+            acquireMutex(mutex_, 10);
+            motor_info_struct info;
+            // RCLCPP_INFO(this->get_logger(), "Getting info");
             if(check_connection())
             {
                 serial_->flushInput();
                 std::string response = serial_->readline(100, "\r");
-                // RCLCPP_INFO(this->get_logger(), "Received: %s", response.c_str());
+                RCLCPP_INFO(this->get_logger(), "Received: %s", response.c_str());
 
                 try
                 {
-                    speed = parse_string(response);
+                    info = parse_string(response);
                     // RCLCPP_INFO(this->get_logger(), "Left: %d, Right: %d", speed.motor_1_speed, speed.motor_2_speed);
-                    std_msgs::msg::Int32MultiArray msg;
-                    msg.data = {speed.motor_1_speed, speed.motor_2_speed};
-                    wheel_speed_publisher_->publish(msg);
+                    std_msgs::msg::Float64MultiArray wheel_speed_msg;
+                    geometry_msgs::msg::Twist rc_input_msg;
+                    wheel_speed_msg.data = {info.motor_1_speed, info.motor_2_speed};
+                    rc_input_msg.linear.x = {info.pulse_1 - info.pulse_2};
+                    rc_input_msg.angular.z = {3000 - info.pulse_1 - info.pulse_2};
+                    wheel_speed_publisher_->publish(wheel_speed_msg);
+                    rc_input_publisher_->publish(rc_input_msg);
                     count_++;
                     // RCLCPP_INFO(this->get_logger(), "Speed published");
                 }
@@ -181,23 +194,36 @@ class SpeedControlNode : public rclcpp::Node
             {
                 RCLCPP_ERROR(this->get_logger(), "Serial port not open");
             }
+            releaseMutex(mutex_);
         }
 
-        struct Speed
+        struct motor_info_struct
         {
-            int motor_1_speed;
-            int motor_2_speed;
+            double motor_1_speed;
+            double motor_2_speed;
+            double pulse_1;
+            double pulse_2;
         };
 
-        Speed parse_string(std::string str)
+        motor_info_struct parse_string(std::string str)
         {
-            Speed speed;
+            motor_info_struct info;
             std::string token;
+
             token = str.substr(prefix_length_, str.find(delimiter_) - prefix_length_);
-            speed.motor_1_speed = std::stoi(token);
+            info.motor_1_speed = std::stod(token);
             str.erase(0, token.length() + prefix_length_ + delimiter_.length());
-            speed.motor_2_speed = std::stoi(str);
-            return speed;
+            
+            token = str.substr(0, str.find(delimiter_));
+            info.motor_2_speed = std::stod(token);
+            str.erase(0, token.length() + delimiter_.length());
+
+            token = str.substr(0, str.find(delimiter_));
+            info.pulse_1 = std::stod(token);
+            str.erase(0, token.length() + delimiter_.length());
+            
+            info.pulse_2 = std::stod(str);
+            return info;
         }
 
         void stream_rate()
