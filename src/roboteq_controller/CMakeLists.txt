@@ -12,7 +12,7 @@ find_package(serial REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
-add_executable(speed_control_node src/speed_control_node.cpp src/inter_process_communication.cpp)
+add_executable(speed_control_node src/speed_control_node.cpp)
 ament_target_dependencies(speed_control_node rclcpp serial std_msgs geometry_msgs)
 
 target_include_directories(speed_control_node PUBLIC
@@ -22,7 +22,6 @@ target_include_directories(speed_control_node PUBLIC
 install(TARGETS
   speed_control_node
   DESTINATION lib/${PROJECT_NAME})
-
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

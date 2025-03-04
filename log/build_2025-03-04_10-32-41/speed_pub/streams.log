@@ -1,0 +1,11 @@
+[0.016s] Invoking command in '/home/niles/ros2_ws/build/speed_pub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/niles/ros2_ws/build/speed_pub -- -j16 -l16
+[0.116s] [ 50%] [32mBuilding CXX object CMakeFiles/speed_pub_node.dir/src/speed_pub_node.cpp.o[0m
+[2.624s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:[m[K In member function ‘[01m[Kvoid SpeedPubNode::[01;32m[Kset_target_speed[m[K(geometry_msgs::msg::Twist_<std::allocator<void> >::SharedPtr)[m[K’:
+[2.624s] [01m[K/home/niles/ros2_ws/src/speed_pub/src/speed_pub_node.cpp:30:38:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_base_[m[K’ was not declared in this scope; did you mean ‘[01m[Kwheel_base[m[K’?
+[2.624s]    30 |         left_speed = msg->linear.x + [01;31m[Kwheel_base_[m[K*msg->angular.z;
+[2.624s]       |                                      [01;31m[K^~~~~~~~~~~[m[K
+[2.624s]       |                                      [32m[Kwheel_base[m[K
+[4.291s] gmake[2]: *** [CMakeFiles/speed_pub_node.dir/build.make:76: CMakeFiles/speed_pub_node.dir/src/speed_pub_node.cpp.o] Error 1
+[4.291s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/speed_pub_node.dir/all] Error 2
+[4.292s] gmake: *** [Makefile:146: all] Error 2
+[4.294s] Invoked command in '/home/niles/ros2_ws/build/speed_pub' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/niles/ros2_ws/build/speed_pub -- -j16 -l16
