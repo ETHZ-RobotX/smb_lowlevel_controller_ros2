@@ -14,7 +14,7 @@ using namespace std::chrono_literals;
 class SpeedControlNode : public rclcpp::Node
 {
     public:
-        SpeedControlNode() : Node("speed_control_node"), port_("/dev/ttyUSB0"), baudrate_(230400), motor_1_channel_(1), motor_2_channel_(2)
+        SpeedControlNode() : Node("speed_control_node"), port_("/dev/ttyUSB0"), baudrate_(115200), motor_1_channel_(1), motor_2_channel_(2)
         {
             this->declare_parameter<std::string>("port", port_);
             this->declare_parameter<int>("baudrate", baudrate_);
@@ -28,7 +28,8 @@ class SpeedControlNode : public rclcpp::Node
             rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("rc_input", 10);
             RCLCPP_INFO(this->get_logger(), "Publisher created");
             wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("target_speed", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
-            publish_timer_ = this->create_wall_timer(500ms, std::bind(&SpeedControlNode::get_info, this));
+            publish_timer_ = this->create_wall_timer(500ms, std::bind(&SpeedControlNode::publish_info, this));
+            read_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::read_info, this));
             RCLCPP_INFO(this->get_logger(), "Timer created");
             freq_timer_ = this->create_wall_timer(1s, std::bind(&SpeedControlNode::stream_rate, this));
             
@@ -50,6 +51,8 @@ class SpeedControlNode : public rclcpp::Node
         std::string delimiter_ = ":";
         int prefix_length_ = prefix_.length();
         int count_ = 0;
+        std::string serial_response_;
+        rclcpp::TimerBase::SharedPtr read_timer_;
 
         rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_publisher_;
         rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_subscriber_;
@@ -116,11 +119,14 @@ class SpeedControlNode : public rclcpp::Node
             {
                 int target_speed_1 = msg->data[0];
                 int target_speed_2 = msg->data[1];
-                std::string speed_command = "!S 1 " + std::to_string(target_speed_1) + "\r" +
-                                            "!S 2 " + std::to_string(target_speed_2) + "\r\n";
+                // RCLCPP_INFO(this->get_logger(), "Received target: %f, %f", target_speed_1, target_speed_2);
+                std::string speed_command = "!G 1 " + std::to_string(target_speed_1) + "\r" + "!G 2 " + std::to_string(target_speed_2) + "\r\n";
 
                 serial_->write(speed_command);
                 serial_->flush();
+                RCLCPP_INFO(this->get_logger(), "Sent: %s", speed_command.c_str());
+                // RCLCPP_INFO(this->get_logger(), "Received target: %d, %d", target_speed_1, target_speed_2);
+
 
                 // Wait for '+' acknowledgment
                 std::string response;
@@ -145,7 +151,7 @@ class SpeedControlNode : public rclcpp::Node
 
                 if (ack_received)
                 {
-                    // RCLCPP_INFO(this->get_logger(), "Acknowledgment received: +");
+                    RCLCPP_INFO(this->get_logger(), "Acknowledgment received: +");
                 }
                 else
                 {
@@ -159,34 +165,56 @@ class SpeedControlNode : public rclcpp::Node
         }
 
 
-        void get_info()
+        void read_info()
+        {
+            if(check_connection())
+            {
+                serial_->flushInput();
+                std::string response = serial_->readline(100, "\r");
+                // Check if it starts with prefix
+                if(response.find(prefix_) == 0)
+                {
+                    RCLCPP_INFO(this->get_logger(), "Received: %s", response.c_str());
+                    serial_response_ = response;
+                    count_++;
+                }
+                else
+                {
+                    RCLCPP_ERROR(this->get_logger(), "Invalid response: %s", response.c_str());
+                }
+            }
+            else
+            {
+                RCLCPP_ERROR(this->get_logger(), "Serial port not open");
+            }
+        }
+        
+        void publish_info()
         {
             motor_info_struct motor_info;
             // RCLCPP_INFO(this->get_logger(), "Getting speed");
             if(check_connection())
             {
-                serial_->flushInput();
-                std::string response = serial_->readline(100, "\r");
-                RCLCPP_INFO(this->get_logger(), "Received: %s", response.c_str());
 
-                try
-                {
-                    motor_info = parse_string(response);
-                    // RCLCPP_INFO(this->get_logger(), "Left: %d, Right: %d", speed.motor_1_speed, speed.motor_2_speed);
+                // try
+                // {
+                    // RCLCPP_INFO(this->get_logger(), "%s",serial_response_.c_str());
+                    motor_info = parse_string(serial_response_);
+                    // RCLCPP_INFO(this->get_logger(), "Left: %d, Right: %d", motor_info.motor_1_speed, motor_info.motor_2_speed);
                     std_msgs::msg::Float64MultiArray wheel_speed_msg;
                     geometry_msgs::msg::Twist rc_input_msg;
                     wheel_speed_msg.data = {motor_info.motor_1_speed, motor_info.motor_2_speed};
                     rc_input_msg.linear.x = motor_info.pulse_1 - motor_info.pulse_2;
                     rc_input_msg.angular.z = 3000 - motor_info.pulse_1 - motor_info.pulse_2;
+                    // RCLCPP_INFO(this->get_logger(), "1: %f, 2: %f", rc_input_msg.linear.x, rc_input_msg.angular.z);
                     rc_input_publisher_->publish(rc_input_msg);
                     wheel_speed_publisher_->publish(wheel_speed_msg);
-                    count_++;
                     // RCLCPP_INFO(this->get_logger(), "Speed published");
-                }
-                catch(const std::exception& e)
-                {
-                    RCLCPP_ERROR(this->get_logger(), "Error parsing speed: %s", e.what());
-                }
+                // }
+                // catch(const std::exception& e)
+                // {
+                //     RCLCPP_ERROR(this->get_logger(), "Error parsing speed: %s", e.what());
+                // }
             }
             else
             {
@@ -207,18 +235,22 @@ class SpeedControlNode : public rclcpp::Node
             motor_info_struct motor_info;
             std::string token;
             token = str.substr(prefix_length_, str.find(delimiter_) - prefix_length_);
-            motor_info.motor_1_speed = std::stoi(token);
+            // RCLCPP_INFO(this->get_logger(), "Token 1: %s", token.c_str());
+            motor_info.motor_1_speed = std::stod(token);
             str.erase(0, token.length() + prefix_length_ + delimiter_.length());
 
             token = str.substr(0, str.find(delimiter_));
-            motor_info.motor_2_speed = std::stoi(token);
-            str.erase(0, token.length() + prefix_length_ + delimiter_.length());
+            // RCLCPP_INFO(this->get_logger(), "Token 2: %s", token.c_str());
+            motor_info.motor_2_speed = std::stod(token);
+            str.erase(0, token.length() + delimiter_.length());
 
-            token = str.substr(prefix_length_, str.find(delimiter_) - prefix_length_);
-            motor_info.pulse_1 = std::stoi(token);
-            str.erase(0, token.length() + prefix_length_ + delimiter_.length());
+            token = str.substr(0, str.find(delimiter_));
+            // RCLCPP_INFO(this->get_logger(), "Token 3: %s", token.c_str());
+            motor_info.pulse_1 = std::stod(token);
+            str.erase(0, token.length() + delimiter_.length());
 
-            motor_info.pulse_2 = std::stoi(str);
+            // RCLCPP_INFO(this->get_logger(), "Token 4: %s", str.c_str());
+            motor_info.pulse_2 = std::stod(str);
             return motor_info;
         }
 
@@ -226,7 +258,7 @@ class SpeedControlNode : public rclcpp::Node
         {
             if(check_connection())
             {
-                // RCLCPP_INFO(this->get_logger(), "Stream rate: %d", count_);
+                RCLCPP_INFO(this->get_logger(), "Stream rate: %d", count_);
                 count_ = 0;
             }
         }

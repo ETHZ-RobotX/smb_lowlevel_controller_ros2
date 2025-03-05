@@ -1,0 +1,25 @@
+[0.010s] Invoking command in '/home/niles/ros2_ws/build/speed_pub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/niles/ros2_ws/build/speed_pub -- -j16 -l16
+[0.059s] [ 50%] [32mBuilding CXX object CMakeFiles/speed_pub_node.dir/src/speed_pub_node.cpp.o[0m
+[5.750s] [100%] [32m[1mLinking CXX executable speed_pub_node[0m
+[5.987s] [100%] Built target speed_pub_node
+[5.999s] Invoked command in '/home/niles/ros2_ws/build/speed_pub' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/niles/ros2_ws/build/speed_pub -- -j16 -l16
+[6.009s] Invoking command in '/home/niles/ros2_ws/build/speed_pub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/niles/ros2_ws/build/speed_pub
+[6.017s] -- Install configuration: ""
+[6.017s] -- Installing: /home/niles/ros2_ws/install/speed_pub/lib/speed_pub/speed_pub_node
+[6.021s] -- Set non-toolchain portion of runtime path of "/home/niles/ros2_ws/install/speed_pub/lib/speed_pub/speed_pub_node" to ""
+[6.021s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/ament_index/resource_index/package_run_dependencies/speed_pub
+[6.021s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/ament_index/resource_index/parent_prefix_path/speed_pub
+[6.021s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/environment/ament_prefix_path.sh
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/environment/ament_prefix_path.dsv
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/environment/path.sh
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/environment/path.dsv
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/local_setup.bash
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/local_setup.sh
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/local_setup.zsh
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/local_setup.dsv
+[6.022s] -- Installing: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/package.dsv
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/ament_index/resource_index/packages/speed_pub
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/cmake/speed_pubConfig.cmake
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/cmake/speed_pubConfig-version.cmake
+[6.022s] -- Up-to-date: /home/niles/ros2_ws/install/speed_pub/share/speed_pub/package.xml
+[6.024s] Invoked command in '/home/niles/ros2_ws/build/speed_pub' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/niles/ros2_ws/build/speed_pub

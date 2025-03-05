@@ -18,7 +18,7 @@ class SpeedPubNode : public rclcpp::Node
             target_speed_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("target_speed", 10);
             rc_input_subscriber_ = this->create_subscription<geometry_msgs::msg::Twist>("rc_input", 10, std::bind(&SpeedPubNode::set_target_speed, this, std::placeholders::_1));
             timer_ = this->create_wall_timer(
-            20ms, std::bind(&SpeedPubNode::timer_callback, this));
+            500ms, std::bind(&SpeedPubNode::timer_callback, this));
         }
 
     private:

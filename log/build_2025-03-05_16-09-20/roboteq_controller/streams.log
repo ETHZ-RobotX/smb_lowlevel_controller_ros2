@@ -1,0 +1,54 @@
+[0.008s] Invoking command in '/home/niles/ros2_ws/build/roboteq_controller': CMAKE_PREFIX_PATH=/opt/ros/jazzy:/home/niles/ros2_ws/install/serial:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PKG_CONFIG_PATH=/home/niles/ros2_ws/install/serial/lib/x86_64-linux-gnu/pkgconfig:/home/niles/ros2_ws/install/serial/lib/pkgconfig ROS_PACKAGE_PATH=/home/niles/ros2_ws/install/serial/share /usr/bin/cmake --build /home/niles/ros2_ws/build/roboteq_controller -- -j16 -l16
+[0.055s] [ 50%] [32mBuilding CXX object CMakeFiles/speed_control_node.dir/src/speed_control_node.cpp.o[0m
+[1.549s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:[m[K In constructor ‘[01m[KSpeedControlNode::[01;32m[KSpeedControlNode[m[K()[m[K’:
+[1.549s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:48:21:[m[K [01;35m[Kwarning: [m[K‘[01m[KSpeedControlNode::port_[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.549s]    48 |         std::string [01;35m[Kport_[m[K;
+[1.549s]       |                     [01;35m[K^~~~~[m[K
+[1.549s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:47:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint SpeedControlNode::baudrate_[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.550s]    47 |         int [01;35m[Kbaudrate_[m[K;
+[1.550s]       |             [01;35m[K^~~~~~~~~[m[K
+[1.550s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:17:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.550s]    17 |         [01;35m[KSpeedControlNode[m[K() : Node("speed_control_node"), port_("/dev/ttyUSB0"), baudrate_(115200), motor_1_channel_(1), motor_2_channel_(2)
+[1.550s]       |         [01;35m[K^~~~~~~~~~~~~~~~[m[K
+[1.550s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:47:13:[m[K [01;35m[Kwarning: [m[K‘[01m[KSpeedControlNode::baudrate_[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.550s]    47 |         int [01;35m[Kbaudrate_[m[K;
+[1.550s]       |             [01;35m[K^~~~~~~~~[m[K
+[1.550s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:45:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint SpeedControlNode::motor_1_channel_[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.550s]    45 |         int [01;35m[Kmotor_1_channel_[m[K;
+[1.550s]       |             [01;35m[K^~~~~~~~~~~~~~~~[m[K
+[1.550s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:17:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[1.550s]    17 |         [01;35m[KSpeedControlNode[m[K() : Node("speed_control_node"), port_("/dev/ttyUSB0"), baudrate_(115200), motor_1_channel_(1), motor_2_channel_(2)
+[1.550s]       |         [01;35m[K^~~~~~~~~~~~~~~~[m[K
+[1.567s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:[m[K In member function ‘[01m[Kvoid SpeedControlNode::[01;32m[Kpublish_info[m[K()[m[K’:
+[1.567s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:205:56:[m[K [01;35m[Kwarning: [m[Knarrowing conversion of ‘[01m[Kmotor_info.SpeedControlNode::motor_info_struct::motor_1_speed[m[K’ from ‘[01m[Kint[m[K’ to ‘[01m[Kdouble[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wnarrowing-Wnarrowing]8;;[m[K]
+[1.568s]   205 |                     wheel_speed_msg.data = {[01;35m[Kmotor_info.motor_1_speed[m[K, motor_info.motor_2_speed};
+[1.568s]       |                                             [01;35m[K~~~~~~~~~~~^~~~~~~~~~~~~[m[K
+[1.568s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:205:56:[m[K [01;35m[Kwarning: [m[Knarrowing conversion of ‘[01m[Kmotor_info.SpeedControlNode::motor_info_struct::motor_1_speed[m[K’ from ‘[01m[Kint[m[K’ to ‘[01m[Kdouble[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wnarrowing-Wnarrowing]8;;[m[K]
+[1.568s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:205:82:[m[K [01;35m[Kwarning: [m[Knarrowing conversion of ‘[01m[Kmotor_info.SpeedControlNode::motor_info_struct::motor_2_speed[m[K’ from ‘[01m[Kint[m[K’ to ‘[01m[Kdouble[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wnarrowing-Wnarrowing]8;;[m[K]
+[1.568s]   205 | heel_speed_msg.data = {motor_info.motor_1_speed, [01;35m[Kmotor_info.motor_2_speed[m[K};
+[1.568s]       |                                                  [01;35m[K~~~~~~~~~~~^~~~~~~~~~~~~[m[K
+[1.568s] 
+[1.568s] [01m[K/home/niles/ros2_ws/src/roboteq_controller/src/speed_control_node.cpp:205:82:[m[K [01;35m[Kwarning: [m[Knarrowing conversion of ‘[01m[Kmotor_info.SpeedControlNode::motor_info_struct::motor_2_speed[m[K’ from ‘[01m[Kint[m[K’ to ‘[01m[Kdouble[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wnarrowing-Wnarrowing]8;;[m[K]
+[5.729s] [100%] [32m[1mLinking CXX executable speed_control_node[0m
+[5.926s] [100%] Built target speed_control_node
+[5.937s] Invoked command in '/home/niles/ros2_ws/build/roboteq_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/jazzy:/home/niles/ros2_ws/install/serial:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PKG_CONFIG_PATH=/home/niles/ros2_ws/install/serial/lib/x86_64-linux-gnu/pkgconfig:/home/niles/ros2_ws/install/serial/lib/pkgconfig ROS_PACKAGE_PATH=/home/niles/ros2_ws/install/serial/share /usr/bin/cmake --build /home/niles/ros2_ws/build/roboteq_controller -- -j16 -l16
+[5.938s] Invoking command in '/home/niles/ros2_ws/build/roboteq_controller': CMAKE_PREFIX_PATH=/opt/ros/jazzy:/home/niles/ros2_ws/install/serial:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PKG_CONFIG_PATH=/home/niles/ros2_ws/install/serial/lib/x86_64-linux-gnu/pkgconfig:/home/niles/ros2_ws/install/serial/lib/pkgconfig ROS_PACKAGE_PATH=/home/niles/ros2_ws/install/serial/share /usr/bin/cmake --install /home/niles/ros2_ws/build/roboteq_controller
+[5.944s] -- Install configuration: ""
+[5.945s] -- Installing: /home/niles/ros2_ws/install/roboteq_controller/lib/roboteq_controller/speed_control_node
+[5.950s] -- Set non-toolchain portion of runtime path of "/home/niles/ros2_ws/install/roboteq_controller/lib/roboteq_controller/speed_control_node" to ""
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/ament_index/resource_index/package_run_dependencies/roboteq_controller
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/ament_index/resource_index/parent_prefix_path/roboteq_controller
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/environment/ament_prefix_path.sh
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/environment/ament_prefix_path.dsv
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/environment/path.sh
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/environment/path.dsv
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/local_setup.bash
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/local_setup.sh
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/local_setup.zsh
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/local_setup.dsv
+[5.951s] -- Installing: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/package.dsv
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/ament_index/resource_index/packages/roboteq_controller
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/cmake/roboteq_controllerConfig.cmake
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/cmake/roboteq_controllerConfig-version.cmake
+[5.951s] -- Up-to-date: /home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller/package.xml
+[5.953s] Invoked command in '/home/niles/ros2_ws/build/roboteq_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/jazzy:/home/niles/ros2_ws/install/serial:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(rss) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PKG_CONFIG_PATH=/home/niles/ros2_ws/install/serial/lib/x86_64-linux-gnu/pkgconfig:/home/niles/ros2_ws/install/serial/lib/pkgconfig ROS_PACKAGE_PATH=/home/niles/ros2_ws/install/serial/share /usr/bin/cmake --install /home/niles/ros2_ws/build/roboteq_controller
