@@ -6,6 +6,7 @@
 #include <serial/serial.h>
 #include <std_msgs/msg/float64_multi_array.hpp>
 #include <geometry_msgs/msg/twist.hpp>
+#include <std_msgs/msg/int32.hpp>
 
 #include "roboteq_controller/inter_process_communication.h"
 
@@ -26,9 +27,10 @@ class SpeedControlNode : public rclcpp::Node
             // Create a publisher - publishes the motor speed in RPM
             wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_speed", 10);
             rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("rc_input", 10);
+            dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>("dummy", 10);
             RCLCPP_INFO(this->get_logger(), "Publisher created");
             wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("target_speed", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
-            publish_timer_ = this->create_wall_timer(20ms, std::bind(&SpeedControlNode::publish_info, this));
+            publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
             read_timer_ = this->create_wall_timer(5ms, std::bind(&SpeedControlNode::read_info, this));
             RCLCPP_INFO(this->get_logger(), "Timer created");
             freq_timer_ = this->create_wall_timer(1s, std::bind(&SpeedControlNode::stream_rate, this));
@@ -57,6 +59,7 @@ class SpeedControlNode : public rclcpp::Node
         rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_publisher_;
         rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_subscriber_;
         rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr rc_input_publisher_;
+        rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr dummy_publisher_;
         rclcpp::TimerBase::SharedPtr publish_timer_;
         rclcpp::TimerBase::SharedPtr freq_timer_;
 
@@ -178,6 +181,9 @@ class SpeedControlNode : public rclcpp::Node
                     // RCLCPP_INFO(this->get_logger(), "Received: %s", response.c_str());
                     serial_response_ = response;
                     count_++;
+                    std_msgs::msg::Int32 dummy_msg;
+                    dummy_msg.data = count_;
+                    dummy_publisher_->publish(dummy_msg);
                 }
                 else
                 {
