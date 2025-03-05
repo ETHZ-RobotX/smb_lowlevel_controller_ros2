@@ -28,7 +28,7 @@ class SpeedControlNode : public rclcpp::Node
             rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("rc_input", 10);
             RCLCPP_INFO(this->get_logger(), "Publisher created");
             wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("target_speed", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
-            publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
+            publish_timer_ = this->create_wall_timer(20ms, std::bind(&SpeedControlNode::publish_info, this));
             read_timer_ = this->create_wall_timer(5ms, std::bind(&SpeedControlNode::read_info, this));
             RCLCPP_INFO(this->get_logger(), "Timer created");
             freq_timer_ = this->create_wall_timer(1s, std::bind(&SpeedControlNode::stream_rate, this));
@@ -175,7 +175,7 @@ class SpeedControlNode : public rclcpp::Node
                 // Check if it starts with prefix
                 if(response.find(prefix_) == 0)
                 {
-                    RCLCPP_INFO(this->get_logger(), "Received: %s", response.c_str());
+                    // RCLCPP_INFO(this->get_logger(), "Received: %s", response.c_str());
                     serial_response_ = response;
                     count_++;
                 }
