@@ -1,3 +1,4 @@
+/home/niles/ros2_ws/install/roboteq_controller/share/roboteq_controller//launch/roboteq_launch.py
 /home/niles/ros2_ws/install/roboteq_controller/lib/roboteq_controller/speed_control_node
 /home/niles/ros2_ws/install/roboteq_controller/share/ament_index/resource_index/package_run_dependencies/roboteq_controller
 /home/niles/ros2_ws/install/roboteq_controller/share/ament_index/resource_index/parent_prefix_path/roboteq_controller

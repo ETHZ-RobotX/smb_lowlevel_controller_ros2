@@ -19,6 +19,12 @@ target_include_directories(speed_control_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
+# Install launch files.
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+
 install(TARGETS
   speed_control_node
   DESTINATION lib/${PROJECT_NAME})

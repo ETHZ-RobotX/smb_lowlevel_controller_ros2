@@ -455,7 +455,7 @@ CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding Python3
-FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[/home/niles/miniforge3/envs/rss/bin/python3][cfound components: Interpreter ][v3.9.21()]
+FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[/home/niles/miniforge3/envs/rss/bin/python3][cfound components: Interpreter ][v3.13.2()]
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
 //Compiler reason failure
@@ -465,7 +465,7 @@ _Python3_Development_REASON_FAILURE:INTERNAL=
 //Path to a program.
 _Python3_EXECUTABLE:INTERNAL=/home/niles/miniforge3/envs/rss/bin/python3
 //Python3 Properties
-_Python3_INTERPRETER_PROPERTIES:INTERNAL=Python;3;9;21;64;32;;cpython-39-x86_64-linux-gnu;abi3;/home/niles/miniforge3/envs/rss/lib/python3.9;/home/niles/miniforge3/envs/rss/lib/python3.9;/home/niles/miniforge3/envs/rss/lib/python3.9/site-packages;/home/niles/miniforge3/envs/rss/lib/python3.9/site-packages
+_Python3_INTERPRETER_PROPERTIES:INTERNAL=Python;3;13;2;64;32;;cpython-313-x86_64-linux-gnu;abi3;/home/niles/miniforge3/envs/rss/lib/python3.13;/home/niles/miniforge3/envs/rss/lib/python3.13;/home/niles/miniforge3/envs/rss/lib/python3.13/site-packages;/home/niles/miniforge3/envs/rss/lib/python3.13/site-packages
 _Python3_INTERPRETER_SIGNATURE:INTERNAL=a33792c4642cd26086d87f98ce832c6b
 //NumPy reason failure
 _Python3_NumPy_REASON_FAILURE:INTERNAL=
