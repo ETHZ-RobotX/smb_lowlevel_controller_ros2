@@ -29,6 +29,7 @@ class SpeedPubNode : public rclcpp::Node
     {
         left_speed = msg->linear.x + wheel_base*msg->angular.z;
         right_speed = msg->linear.x - wheel_base*msg->angular.z;
+        right_speed = -right_speed;
         RCLCPP_INFO(this->get_logger(), "Received: '%f', '%f'", left_speed, right_speed);
     }
 

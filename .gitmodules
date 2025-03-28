@@ -1,0 +1,3 @@
+[submodule "serial"]
+	path = src/serial
+	url = https://github.com/iscumd/isc_serial.git
