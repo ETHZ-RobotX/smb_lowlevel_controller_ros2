@@ -5,7 +5,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include <serial/serial.h>
 #include <std_msgs/msg/float64_multi_array.hpp>
-#include <geometry_msgs/msg/twist.hpp>
+#include <geometry_msgs/msg/twist_stamped.hpp>
 #include <std_msgs/msg/int32.hpp>
 
 #include "roboteq_controller/inter_process_communication.h"
@@ -29,7 +29,7 @@ class SpeedControlNode : public rclcpp::Node
             // Create a publisher - publishes the motor speeds in RPM
             wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_speed", 10);
             // Create a publisher - publishes the RC input as a Twist message
-            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("cmd_vel", 10);
             // Create a publisher - publishes a dummy message - to check the frequency of the node
             dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>("dummy", 10);
             // Creating a subscriber - to receive the target speed
@@ -69,7 +69,7 @@ class SpeedControlNode : public rclcpp::Node
 
         rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_publisher_;
         rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_subscriber_;
-        rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr rc_input_publisher_;
+        rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr rc_input_publisher_;
         rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr dummy_publisher_;
         rclcpp::TimerBase::SharedPtr publish_timer_;
         rclcpp::TimerBase::SharedPtr flush_timer_;
@@ -136,8 +136,8 @@ class SpeedControlNode : public rclcpp::Node
                 
                 if (check_connection())
                 {
-                    int target_speed_1 = llround(msg->data[0]);
-                    int target_speed_2 = llround(msg->data[1]);
+                    int target_speed_1 = llround(msg->data[1]);
+                    int target_speed_2 = llround(msg->data[2]);
                     last_command_time_ = this->now();
                     // Santity check
                     if (target_speed_1 > 1000)
@@ -208,10 +208,11 @@ class SpeedControlNode : public rclcpp::Node
                     // Publish to all topics
                     motor_info = parse_string(serial_response_);
                     std_msgs::msg::Float64MultiArray wheel_speed_msg;
-                    geometry_msgs::msg::Twist rc_input_msg;
-                    wheel_speed_msg.data = {motor_info.motor_1_speed, motor_info.motor_2_speed};
-                    rc_input_msg.linear.x = 33*(motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max linear velocity is 5 m/s
-                    rc_input_msg.angular.z = 33*(3000 - motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max angular velocity is 1 rad/s
+                    geometry_msgs::msg::TwistStamped rc_input_msg;
+                    wheel_speed_msg.data = {this->now(), motor_info.motor_1_speed, motor_info.motor_2_speed};
+                    rc_input_msg.header.stamp = this->now();
+                    rc_input_msg.twist.linear.x = 33*(motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max linear velocity is 5 m/s
+                    rc_input_msg.twist.angular.z = 33*(3000 - motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max angular velocity is 1 rad/s
                     rc_input_publisher_->publish(rc_input_msg);
                     wheel_speed_publisher_->publish(wheel_speed_msg);
                 }
