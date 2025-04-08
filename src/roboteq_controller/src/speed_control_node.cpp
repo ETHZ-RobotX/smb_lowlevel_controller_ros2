@@ -209,7 +209,7 @@ class SpeedControlNode : public rclcpp::Node
                     motor_info = parse_string(serial_response_);
                     std_msgs::msg::Float64MultiArray wheel_speed_msg;
                     geometry_msgs::msg::TwistStamped rc_input_msg;
-                    wheel_speed_msg.data = {this->now(), motor_info.motor_1_speed, motor_info.motor_2_speed};
+                    wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, motor_info.motor_2_speed};
                     rc_input_msg.header.stamp = this->now();
                     rc_input_msg.twist.linear.x = 33*(motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max linear velocity is 5 m/s
                     rc_input_msg.twist.angular.z = 33*(3000 - motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max angular velocity is 1 rad/s
