@@ -33,13 +33,13 @@ class SpeedControlNode : public rclcpp::Node
             // Create a publisher - publishes a dummy message - to check the frequency of the node
             dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>("dummy", 10);
             // Creating a subscriber - to receive the target speed
-            wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("wheel_joint_commands", 0, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
+            wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("wheel_joint_commands", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
             // Creating timer - for publoshing topics
             publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
             // Creating timer - to read motor info (speed + rc inputs) from the motor controller
             read_timer_ = this->create_wall_timer(5ms, std::bind(&SpeedControlNode::read_info, this));
             // Creating timer - to check the stream rate
-            freq_timer_ = this->create_wall_timer(100ms, std::bind(&SpeedControlNode::stream_rate, this));
+            flsh_timer_ = this->create_wall_timer(100ms, std::bind(&SpeedControlNode::flush, this));
             // Creating timer - to check if the node is receiving speed commands
             // watchdog_timer_ = this->create_wall_timer(500ms, std::bind(&SpeedControlNode::watchdog_check, this));
             
@@ -72,8 +72,7 @@ class SpeedControlNode : public rclcpp::Node
         rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr rc_input_publisher_;
         rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr dummy_publisher_;
         rclcpp::TimerBase::SharedPtr publish_timer_;
-        rclcpp::TimerBase::SharedPtr freq_timer_;
-        // rclcpp::TimerBase::SharedPtr watchdog_timer_;
+        rclcpp::TimerBase::SharedPtr flush_timer_;
 
         rclcpp::Time last_command_time_;
 
@@ -102,8 +101,6 @@ class SpeedControlNode : public rclcpp::Node
                     std::string speed_query = "/\"d=\",\":\"?S " + std::to_string(motor_1_channel_) + "_?S " + std::to_string(motor_2_channel_) + "_?PI 1_?PI 2_# 5\r\n";
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", speed_query.c_str());
                     serial_->write(speed_query);
-                    // serial_->flush();
-                    // serial_->flushInput();
                     
                 }
                 else
@@ -141,28 +138,24 @@ class SpeedControlNode : public rclcpp::Node
                 {
                     int target_speed_1 = llround(msg->data[0]);
                     int target_speed_2 = llround(msg->data[1]);
-                    // Sanity checks - for limits of the input speed
-                    if(target_speed_1 > 1000)
+                    last_command_time_ = this->now();
+                    // Santity check
+                    if (target_speed_1 > 1000)
                     {
                         target_speed_1 = 1000;
-                        RCLCPP_WARN(this->get_logger(), "Target speed 1 is above the upper limit, setting to 1000");
                     }
-                    if(target_speed_1 < -1000)
+                    else if (target_speed_1 < -1000)
                     {
                         target_speed_1 = -1000;
-                        RCLCPP_WARN(this->get_logger(), "Target speed 1 is below the lower limit, setting to -1000");
                     }
-                    if(target_speed_2 > 1000)
+                    if (target_speed_2 > 1000)
                     {
                         target_speed_2 = 1000;
-                        RCLCPP_WARN(this->get_logger(), "Target speed 2 is above the upper limit, setting to 1000");
                     }
-                    if(target_speed_2 < -1000)
+                    else if (target_speed_2 < -1000)
                     {
                         target_speed_2 = -1000;
-                        RCLCPP_WARN(this->get_logger(), "Target speed 2 is below the lower limit, setting to -1000");
                     }
-                    last_command_time_ = this->now();
                     std::string speed_command = "!G 1 " + std::to_string(target_speed_1) + "\r" + "!G 2 " + std::to_string(target_speed_2) + "\r\n";
 
                     serial_->write(speed_command);
@@ -195,7 +188,7 @@ class SpeedControlNode : public rclcpp::Node
                 }
                 else
                 {
-                    RCLCPP_ERROR(this->get_logger(), "Invalid response: %s", response.c_str());
+                    // RCLCPP_ERROR(this->get_logger(), "Invalid response: %s", response.c_str());
                 }
             }
             else
@@ -217,8 +210,8 @@ class SpeedControlNode : public rclcpp::Node
                     std_msgs::msg::Float64MultiArray wheel_speed_msg;
                     geometry_msgs::msg::Twist rc_input_msg;
                     wheel_speed_msg.data = {motor_info.motor_1_speed, motor_info.motor_2_speed};
-                    rc_input_msg.linear.x = motor_info.pulse_1 - motor_info.pulse_2;
-                    rc_input_msg.angular.z = 3000 - motor_info.pulse_1 - motor_info.pulse_2;
+                    rc_input_msg.linear.x = 33*(motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max linear velocity is 5 m/s
+                    rc_input_msg.angular.z = (3000 - motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max angular velocity is 1 rad/s
                     rc_input_publisher_->publish(rc_input_msg);
                     wheel_speed_publisher_->publish(wheel_speed_msg);
                 }
@@ -262,43 +255,14 @@ class SpeedControlNode : public rclcpp::Node
             return motor_info;
         }
 
-        void stream_rate()
+        void flush()
         {
-            serial_->flush();
-            serial_->flushInput();
             if(check_connection())
             {
-                RCLCPP_INFO(this->get_logger(), "Stream rate: %d", count_/100);
-                count_ = 0;
+                serial_->flush();
+                serial_->flushInput();
             }
         }
-
-
-        // void watchdog_check()
-        // {
-        //     if(send_cmd_flag_ != 0)
-        //     {
-        //         if (this->now() - last_command_time_ > rclcpp::Duration(1s))
-        //         {
-        //             RCLCPP_WARN(this->get_logger(), "No speed commands received, stopping motors");
-        //             stop_motors();
-        //         }
-        //     }
-        // }
-
-        // void emergency_stop_callback(const std_msgs::msg::Bool::SharedPtr msg)
-        // {
-        //     emergency_stop_ = msg->data;
-        //     if (emergency_stop_)
-        //     {
-        //         RCLCPP_WARN(this->get_logger(), "Emergency stop activated!");
-        //         stop_motors();
-        //     }
-        //     else
-        //     {
-        //         RCLCPP_INFO(this->get_logger(), "Emergency stop released");
-        //     }
-        // }
 
         void stop_motors()
         {
