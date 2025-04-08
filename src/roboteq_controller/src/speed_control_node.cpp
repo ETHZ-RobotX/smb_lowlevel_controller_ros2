@@ -156,7 +156,7 @@ class SpeedControlNode : public rclcpp::Node
                     {
                         target_speed_2 = -1000;
                     }
-                    std::string speed_command = "!G 1 " + std::to_string(target_speed_1) + "\r" + "!G 2 " + std::to_string(target_speed_2) + "\r\n";
+                    std::string speed_command = "!G 1 " + std::to_string(-target_speed_1) + "\r" + "!G 2 " + std::to_string(target_speed_2) + "\r\n";
 
                     serial_->write(speed_command);
                     // Flush input buffer to prevent lag
@@ -211,7 +211,7 @@ class SpeedControlNode : public rclcpp::Node
                     geometry_msgs::msg::Twist rc_input_msg;
                     wheel_speed_msg.data = {motor_info.motor_1_speed, motor_info.motor_2_speed};
                     rc_input_msg.linear.x = 33*(motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max linear velocity is 5 m/s
-                    rc_input_msg.angular.z = (3000 - motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max angular velocity is 1 rad/s
+                    rc_input_msg.angular.z = 33*(3000 - motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max angular velocity is 1 rad/s
                     rc_input_publisher_->publish(rc_input_msg);
                     wheel_speed_publisher_->publish(wheel_speed_msg);
                 }
