@@ -29,11 +29,11 @@ class SpeedControlNode : public rclcpp::Node
             // Create a publisher - publishes the motor speeds in RPM
             wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_speed", 10);
             // Create a publisher - publishes the RC input as a Twist message
-            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("rc_input", 10);
+            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
             // Create a publisher - publishes a dummy message - to check the frequency of the node
             dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>("dummy", 10);
             // Creating a subscriber - to receive the target speed
-            wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("target_speed", 0, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
+            wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("wheel_joint_commands", 0, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
             // Creating timer - for publoshing topics
             publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
             // Creating timer - to read motor info (speed + rc inputs) from the motor controller
