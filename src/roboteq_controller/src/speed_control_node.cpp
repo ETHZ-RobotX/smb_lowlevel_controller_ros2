@@ -39,7 +39,7 @@ class SpeedControlNode : public rclcpp::Node
             // Creating timer - to read motor info (speed + rc inputs) from the motor controller
             read_timer_ = this->create_wall_timer(5ms, std::bind(&SpeedControlNode::read_info, this));
             // Creating timer - to check the stream rate
-            flsh_timer_ = this->create_wall_timer(100ms, std::bind(&SpeedControlNode::flush, this));
+            flush_timer_ = this->create_wall_timer(100ms, std::bind(&SpeedControlNode::flush, this));
             // Creating timer - to check if the node is receiving speed commands
             // watchdog_timer_ = this->create_wall_timer(500ms, std::bind(&SpeedControlNode::watchdog_check, this));
             
