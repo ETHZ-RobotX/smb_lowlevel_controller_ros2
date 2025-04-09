@@ -1,4 +1,0 @@
-source;share/roboteq_controller/local_setup.bash
-source;share/roboteq_controller/local_setup.dsv
-source;share/roboteq_controller/local_setup.sh
-source;share/roboteq_controller/local_setup.zsh
