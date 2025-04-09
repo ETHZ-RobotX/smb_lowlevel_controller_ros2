@@ -6,3 +6,4 @@ src/speed_pub
 src/roboteq_controller/build
 src/roboteq_controller/log
 src/roboteq_controller/install
+src/roboteq_controller/.vscode
