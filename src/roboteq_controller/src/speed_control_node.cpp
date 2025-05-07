@@ -145,7 +145,7 @@ class SpeedControlNode : public rclcpp::Node
                     // DEBUG: rint put message data
                     // RCLCPP_INFO(this->get_logger(), "Received message data:  %f %f %f", msg->data[0], msg->data[1], msg->data[2]);
                     int target_speed_1 = llround(msg->data[1]);
-                    int target_speed_2 = llround(msg->data[2]);
+                    int target_speed_2 = -llround(msg->data[2]);
                     last_command_time_ = this->now();
                     // Santity check
                     int max_speed = 120;
@@ -237,10 +237,10 @@ class SpeedControlNode : public rclcpp::Node
                     
                     std_msgs::msg::Float64MultiArray wheel_speed_msg;
                     geometry_msgs::msg::TwistStamped rc_input_msg;
-                    wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, motor_info.motor_2_speed};
+                    wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, -motor_info.motor_2_speed};
                     rc_input_msg.header.stamp = this->now();
-                    rc_input_msg.twist.linear.x = 5*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000; //Max linear velocity is 5 m/s
-                    rc_input_msg.twist.angular.z = 3*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000*wheel_base_); //Max angular velocity is 3 rad/s
+                    rc_input_msg.twist.linear.x = 5.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
+                    rc_input_msg.twist.angular.z = 3.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
 
                     // DEBUG: print rc input
                     // RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
