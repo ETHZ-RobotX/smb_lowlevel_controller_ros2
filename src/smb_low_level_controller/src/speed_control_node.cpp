@@ -8,7 +8,7 @@
 #include <geometry_msgs/msg/twist_stamped.hpp>
 #include <std_msgs/msg/int32.hpp>
 
-#include "roboteq_controller/inter_process_communication.h"
+#include "smb_low_level_controller/inter_process_communication.h"
 
 using namespace std::chrono_literals;
 

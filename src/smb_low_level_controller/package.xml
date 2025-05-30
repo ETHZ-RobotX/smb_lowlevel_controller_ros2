@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>roboteq_controller</name>
+  <name>smb_low_level_controller</name>
   <version>0.0.0</version>
   <description>Low level speed control using the Roboteq motor controller</description>
   <maintainer email="nileshbalu892@gmail.com">niles</maintainer>
