@@ -11,9 +11,10 @@ find_package(rclcpp REQUIRED)
 find_package(serial REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 add_executable(speed_control_node src/speed_control_node.cpp)
-ament_target_dependencies(speed_control_node rclcpp serial std_msgs geometry_msgs)
+ament_target_dependencies(speed_control_node rclcpp serial std_msgs geometry_msgs sensor_msgs)
 
 target_include_directories(speed_control_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
