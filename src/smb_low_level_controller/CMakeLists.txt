@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(roboteq_controller)
+project(smb_low_level_controller)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -18,12 +18,6 @@ ament_target_dependencies(speed_control_node rclcpp serial std_msgs geometry_msg
 target_include_directories(speed_control_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-
-# Install launch files.
-install(DIRECTORY
-  launch
-  DESTINATION share/${PROJECT_NAME}/
-)
 
 install(TARGETS
   speed_control_node

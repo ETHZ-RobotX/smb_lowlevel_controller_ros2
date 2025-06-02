@@ -1,6 +1,7 @@
 #include <memory>
 #include <string>
 #include <chrono>
+#include <cmath>
 
 #include "rclcpp/rclcpp.hpp"
 #include <serial/serial.h>
@@ -34,10 +35,13 @@ class SpeedControlNode : public rclcpp::Node
             dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>("dummy", 10);
             // Creating a subscriber - to receive the target speed
             wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("wheel_joint_commands", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
-            // Creating timer - for publoshing topics
+            // Creating timer - for publishing topics
             publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
             // Creating timer - to read motor info (speed + rc inputs) from the motor controller
             read_timer_ = this->create_wall_timer(5ms, std::bind(&SpeedControlNode::read_info, this));
+            
+            
+            
             // Creating timer - to check the stream rate
             flush_timer_ = this->create_wall_timer(100ms, std::bind(&SpeedControlNode::flush, this));
             // Creating timer - to check if the node is receiving speed commands
@@ -66,6 +70,8 @@ class SpeedControlNode : public rclcpp::Node
         int count_ = 0;
         std::string serial_response_;
         rclcpp::TimerBase::SharedPtr read_timer_;
+
+        float wheel_base_ = 0.68; // in meters - distance between the wheels
 
         rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_publisher_;
         rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_subscriber_;
@@ -98,7 +104,7 @@ class SpeedControlNode : public rclcpp::Node
                     serial_->write(echo_query);
 
                     // Initialize data stream - to get motor speeds and RC inputs
-                    std::string speed_query = "/\"d=\",\":\"?S " + std::to_string(motor_1_channel_) + "_?S " + std::to_string(motor_2_channel_) + "_?PI 1_?PI 2_# 5\r\n";
+                    std::string speed_query = "/\"d=\",\":\"?S " + std::to_string(motor_1_channel_) + "_?S " + std::to_string(motor_2_channel_) + "_?PIC 1_?PIC 2_# 5\r\n"; // change to PIC (page 272 in manual)
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", speed_query.c_str());
                     serial_->write(speed_query);
                     
@@ -135,33 +141,51 @@ class SpeedControlNode : public rclcpp::Node
             {
                 
                 if (check_connection())
-                {
+                {   
+                    // DEBUG: rint put message data
+                    // RCLCPP_INFO(this->get_logger(), "Received message data:  %f %f %f", msg->data[0], msg->data[1], msg->data[2]);
                     int target_speed_1 = llround(msg->data[1]);
-                    int target_speed_2 = llround(msg->data[2]);
+                    int target_speed_2 = -llround(msg->data[2]);
                     last_command_time_ = this->now();
                     // Santity check
-                    if (target_speed_1 > 1000)
+                    int max_speed = 120;
+                    if (target_speed_1 > max_speed)
                     {
-                        target_speed_1 = 1000;
+                        target_speed_1 = max_speed;
                     }
-                    else if (target_speed_1 < -1000)
+                    else if (target_speed_1 < -max_speed)
                     {
-                        target_speed_1 = -1000;
+                        target_speed_1 = -max_speed;
                     }
-                    if (target_speed_2 > 1000)
+                    if (target_speed_2 > max_speed)
                     {
-                        target_speed_2 = 1000;
+                        target_speed_2 = max_speed;
                     }
-                    else if (target_speed_2 < -1000)
+                    else if (target_speed_2 < -max_speed)
                     {
-                        target_speed_2 = -1000;
+                        target_speed_2 = -max_speed;
                     }
-                    std::string speed_command = "!G 1 " + std::to_string(-target_speed_1) + "\r" + "!G 2 " + std::to_string(target_speed_2) + "\r\n";
 
-                    serial_->write(speed_command);
-                    // Flush input buffer to prevent lag
-                    // serial_->flush();
-                    // serial_->flushInput();
+                    if(target_speed_1 == 0 && target_speed_2 == 0)
+                    {
+                        stop_motors();
+                        
+                    }
+                    else
+                    {
+                        // Convert form rad/s to RPM
+                        std::string speed_command = "!S 1 " + std::to_string(target_speed_1*30/M_PI) + "_" + "!S 2 " + std::to_string(target_speed_2*30/M_PI) + "\r\n";
+                        
+                        // DEBUG: print speed command
+                        RCLCPP_INFO(this->get_logger(), "Sending command: %s", speed_command.c_str());
+                        
+
+
+                        serial_->write(speed_command);
+                        // Flush input buffer to prevent lag
+                        // serial_->flush();
+                        // serial_->flushInput();
+                    }
                     
                 }
                 else
@@ -181,6 +205,7 @@ class SpeedControlNode : public rclcpp::Node
                 if(response.find(prefix_) == 0)
                 {
                     serial_response_ = response;
+                    // RCLCPP_INFO(this->get_logger(), "Response: %s", response.c_str());
                     count_++;
                     std_msgs::msg::Int32 dummy_msg;
                     dummy_msg.data = count_;
@@ -204,15 +229,21 @@ class SpeedControlNode : public rclcpp::Node
             {
 
                 try
-                {
+                {   
                     // Publish to all topics
                     motor_info = parse_string(serial_response_);
+                    // DEBUG: print motor info
+                    // RCLCPP_INFO(this->get_logger(), "Motor 1 speed: %d, Motor 2 speed: %d, Pulse 1: %d, Pulse 2: %d", motor_info.motor_1_speed, motor_info.motor_2_speed, motor_info.pulse_1, motor_info.pulse_2);
+                    
                     std_msgs::msg::Float64MultiArray wheel_speed_msg;
                     geometry_msgs::msg::TwistStamped rc_input_msg;
-                    wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, motor_info.motor_2_speed};
+                    wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, -motor_info.motor_2_speed};
                     rc_input_msg.header.stamp = this->now();
-                    rc_input_msg.twist.linear.x = 25*(motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max linear velocity is 5 m/s
-                    rc_input_msg.twist.angular.z = 5*(3000 - motor_info.pulse_1 - motor_info.pulse_2)/3000.0; //Max angular velocity is 1 rad/s
+                    rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
+                    rc_input_msg.twist.angular.z = 1.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
+
+                    // DEBUG: print rc input
+                    // RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
                     rc_input_publisher_->publish(rc_input_msg);
                     wheel_speed_publisher_->publish(wheel_speed_msg);
                 }
@@ -241,6 +272,7 @@ class SpeedControlNode : public rclcpp::Node
             motor_info_struct motor_info;
             std::string token;
             token = str.substr(prefix_length_, str.find(delimiter_) - prefix_length_);
+
             motor_info.motor_1_speed = std::stod(token);
             str.erase(0, token.length() + prefix_length_ + delimiter_.length());
 
@@ -269,7 +301,8 @@ class SpeedControlNode : public rclcpp::Node
         {
             if (serial_ && serial_->isOpen())
             {
-                serial_->write("!G 1 0\r!G 2 0\r\n");
+                serial_->write("!G 1 0_!G 2 0\r\n");
+
                 RCLCPP_INFO(this->get_logger(), "Motors stopped");
             }
         }
