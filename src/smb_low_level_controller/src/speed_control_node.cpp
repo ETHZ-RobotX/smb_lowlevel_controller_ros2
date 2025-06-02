@@ -8,6 +8,7 @@
 #include <std_msgs/msg/float64_multi_array.hpp>
 #include <geometry_msgs/msg/twist_stamped.hpp>
 #include <std_msgs/msg/int32.hpp>
+#include "sensor_msgs/msg/joint_state.hpp"
 
 #include "roboteq_controller/inter_process_communication.h"
 
@@ -43,6 +44,9 @@ class SpeedControlNode : public rclcpp::Node
             
             // Creating a subscriber - to receive the target speed
             wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("wheel_joint_commands", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
+
+            //Creating a publisher - to publish the wheel positions
+            wheel_pos_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
             
             // Creating timer - for publishing topics
             publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
@@ -85,6 +89,7 @@ class SpeedControlNode : public rclcpp::Node
 
         rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_publisher_;
         rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_subscriber_;
+        rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr wheel_pos_publisher_;
         rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr rc_input_publisher_;
         rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr dummy_publisher_;
         rclcpp::TimerBase::SharedPtr publish_timer_;
@@ -114,7 +119,7 @@ class SpeedControlNode : public rclcpp::Node
                     serial_->write(echo_query);
 
                     // Initialize data stream - to get motor speeds and RC inputs
-                    std::string speed_query = "/\"d=\",\":\"?S " + std::to_string(motor_1_channel_) + "_?S " + std::to_string(motor_2_channel_) + "_?PIC 1_?PIC 2_# 5\r\n"; // change to PIC (page 272 in manual)
+                    std::string speed_query = "/\"d=\",\":\"?S " + std::to_string(motor_1_channel_) + "_?S " + std::to_string(motor_2_channel_) + "_?PIC 1_?PIC 2_?C 1_?C 2_# 5\r\n"; // change to PIC (page 272 in manual)
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", speed_query.c_str());
                     serial_->write(speed_query);
                     
@@ -247,8 +252,14 @@ class SpeedControlNode : public rclcpp::Node
                     // RCLCPP_INFO(this->get_logger(), "Motor 1 speed: %d, Motor 2 speed: %d, Pulse 1: %d, Pulse 2: %d", motor_info.motor_1_speed, motor_info.motor_2_speed, motor_info.pulse_1, motor_info.pulse_2);
                     
                     std_msgs::msg::Float64MultiArray wheel_speed_msg;
+                    sensor_msgs::msg::JointState wheel_pos_msg;
                     geometry_msgs::msg::TwistStamped rc_input_msg;
                     wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, -motor_info.motor_2_speed};
+
+                    wheel_pos_msg.header.stamp = this->now();
+                    wheel_pos_msg.name = {"left_wheel_joint", "right_wheel_joint"};
+                    wheel_pos_msg.position = {static_cast<double>(motor_info.encoder_pos_1), static_cast<double>(motor_info.encoder_pos_2)};
+
                     rc_input_msg.header.stamp = this->now();
                     rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
                     rc_input_msg.twist.angular.z = 1.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
@@ -257,6 +268,7 @@ class SpeedControlNode : public rclcpp::Node
                     // RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
                     rc_input_publisher_->publish(rc_input_msg);
                     wheel_speed_publisher_->publish(wheel_speed_msg);
+                    wheel_pos_publisher_->publish(wheel_pos_msg);
                 }
                 catch(const std::exception& e)
                 {
@@ -276,6 +288,8 @@ class SpeedControlNode : public rclcpp::Node
             int motor_2_speed;
             int pulse_1;
             int pulse_2;
+            int encoder_pos_1;
+            int encoder_pos_2;
         };
 
         // Function to parse the incoming data stream into motor speeds and rc inputs
@@ -297,7 +311,15 @@ class SpeedControlNode : public rclcpp::Node
             motor_info.pulse_1 = std::stod(token);
             str.erase(0, token.length() + delimiter_.length());
 
-            motor_info.pulse_2 = std::stod(str);
+            token = str.substr(0, str.find(delimiter_));
+            motor_info.pulse_2 = std::stod(token);
+            str.erase(0, token.length() + delimiter_.length());
+
+            token = str.substr(0, str.find(delimiter_));
+            motor_info.encoder_pos_1 = std::stod(token);
+            str.erase(0, token.length() + delimiter_.length());
+
+            motor_info.encoder_pos_2 = std::stod(str);
             return motor_info;
         }
 
@@ -327,4 +349,4 @@ int main(int argc, char** argv)
     rclcpp::spin(std::make_shared<SpeedControlNode>());
     rclcpp::shutdown();
     return 0;
-} 
+}
