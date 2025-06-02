@@ -17,51 +17,64 @@ class SpeedControlNode : public rclcpp::Node
     public:
         SpeedControlNode() : Node("speed_control_node"), port_("/dev/ttyUSB0"), baudrate_(115200), motor_1_channel_(1), motor_2_channel_(2), last_command_time_(this->now())
         {
-            this->declare_parameter<std::string>("port", port_);
-            this->declare_parameter<int>("baudrate", baudrate_);
-            this->declare_parameter<int>("motor_1_channel", motor_1_channel_);
-            this->declare_parameter<int>("motor_2_channel", motor_2_channel_);
-            this->declare_parameter<int>("send_cmd", 1);
+            this->declare_parameter<std::string>("port", port_);                    // Parameter for the serial port
+            this->declare_parameter<int>("baudrate", baudrate_);                    // Parameter for the serial port baudrate
+            this->declare_parameter<int>("motor_1_channel", motor_1_channel_);      // Parameter for the motor 1 channel
+            this->declare_parameter<int>("motor_2_channel", motor_2_channel_);      // Parameter for the motor 2 channel
+            this->declare_parameter<int>("send_cmd", 1);                            // Parameter for the send command flag: 
+                                                                                    // 0 - Teleop directly from RC to motor controller 
+                                                                                    // 1 - send commands from this node to the motor controller
 
+            // Connect to the motor controller
             connect();
+
             send_cmd_flag_ = this->get_parameter("send_cmd").as_int();
             RCLCPP_INFO(this->get_logger(), "Serial control flag: %d", send_cmd_flag_);
+            
             // Create a publisher - publishes the motor speeds in RPM
             wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_speed", 10);
+            
             // Create a publisher - publishes the RC input as a Twist message
             rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("cmd_vel", 10);
+            
             // Create a publisher - publishes a dummy message - to check the frequency of the node
             dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>("dummy", 10);
+            
             // Creating a subscriber - to receive the target speed
             wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("wheel_joint_commands", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
+            
             // Creating timer - for publoshing topics
             publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
+            
             // Creating timer - to read motor info (speed + rc inputs) from the motor controller
             read_timer_ = this->create_wall_timer(5ms, std::bind(&SpeedControlNode::read_info, this));
-            // Creating timer - to check the stream rate
+            
+            // Creating timer - to flush the serial port input and output buffers periodically
             flush_timer_ = this->create_wall_timer(100ms, std::bind(&SpeedControlNode::flush, this));
-            // Creating timer - to check if the node is receiving speed commands
-            // watchdog_timer_ = this->create_wall_timer(500ms, std::bind(&SpeedControlNode::watchdog_check, this));
+            
             
         }
 
         ~SpeedControlNode()
         {
+            // Stop the motors and close the serial port on destruction
             stop_motors();
             disconnect();
         }
     
     private:
         int state_ = 0; // 0 - Disconnected, 1 - Connected
-        bool emergency_stop_ = false; // sores emergency stop switch value (from the RC)
+        bool emergency_stop_ = false; // stores emergency stop switch value (from the RC)
+        
         int motor_1_channel_;
         int motor_2_channel_;
         int send_cmd_flag_;
         int baudrate_;
+        
         std::string port_;
         std::unique_ptr<serial::Serial> serial_;
-        std::string prefix_ = "D=";  //Used for parsing the response
-        std::string delimiter_ = ":";
+        std::string prefix_ = "D=";                 //Used for parsing the response
+        std::string delimiter_ = ":";               //Used for parsing the response
         int prefix_length_ = prefix_.length();
         int count_ = 0;
         std::string serial_response_;
@@ -131,7 +144,7 @@ class SpeedControlNode : public rclcpp::Node
 
         void set_speed(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
         {
-            if(send_cmd_flag_ != 0)
+            if(send_cmd_flag_ != 0)         // If the send command flag is set to 1, then send the commands to the motor controller
             {
                 
                 if (check_connection())
