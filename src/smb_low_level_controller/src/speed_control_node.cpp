@@ -10,8 +10,6 @@
 #include <std_msgs/msg/int32.hpp>
 #include "sensor_msgs/msg/joint_state.hpp"
 
-#include "roboteq_controller/inter_process_communication.h"
-
 using namespace std::chrono_literals;
 
 class SpeedControlNode : public rclcpp::Node
@@ -160,11 +158,11 @@ class SpeedControlNode : public rclcpp::Node
                 {   
                     // DEBUG: print put message data
                     // RCLCPP_INFO(this->get_logger(), "Received message data:  %f %f %f", msg->data[0], msg->data[1], msg->data[2]);
-                    int target_speed_1 = llround(msg->data[1]);
-                    int target_speed_2 = -llround(msg->data[2]);
+                    int target_speed_1 = llround(msg->data[1] * 30.0 / M_PI);
+                    int target_speed_2 = -llround(msg->data[2] * 30.0 / M_PI);
                     last_command_time_ = this->now();
                     // Santity check
-                    int max_speed = 120;
+                    int max_speed = 50; // Max speed in RPM
                     if (target_speed_1 > max_speed)
                     {
                         target_speed_1 = max_speed;
@@ -188,8 +186,8 @@ class SpeedControlNode : public rclcpp::Node
                     }
                     else
                     {
-                        // Convert form rad/s to RPM
-                        std::string speed_command = "!S 1 " + std::to_string(target_speed_1*30/M_PI) + "_" + "!S 2 " + std::to_string(target_speed_2*30/M_PI) + "\r\n";
+                        
+                        std::string speed_command = "!S 1 " + std::to_string(target_speed_1) + "_" + "!S 2 " + std::to_string(target_speed_2) + "\r\n";
                         
                         // DEBUG: print speed command
                         RCLCPP_INFO(this->get_logger(), "Sending command: %s", speed_command.c_str());
@@ -211,7 +209,7 @@ class SpeedControlNode : public rclcpp::Node
             if(check_connection())
             {
                 
-                std::string response = serial_->readline(20, "\r");
+                std::string response = serial_->readline(30, "\r");
                 // Check if it starts with prefix
                 if(response.find(prefix_) == 0)
                 {
