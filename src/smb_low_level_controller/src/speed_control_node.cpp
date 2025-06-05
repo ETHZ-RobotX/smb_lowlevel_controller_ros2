@@ -47,7 +47,7 @@ class SpeedControlNode : public rclcpp::Node
             wheel_pos_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
             
             // Creating timer - for publishing topics
-            publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
+            // publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
             
             // Creating timer - to read motor info (speed + rc inputs) from the motor controller
             read_timer_ = this->create_wall_timer(5ms, std::bind(&SpeedControlNode::read_info, this));
@@ -209,6 +209,7 @@ class SpeedControlNode : public rclcpp::Node
             if(check_connection())
             {
                 
+                motor_info_struct motor_info;
                 std::string response = serial_->readline(30, "\r");
                 // Check if it starts with prefix
                 if(response.find(prefix_) == 0)
@@ -222,6 +223,39 @@ class SpeedControlNode : public rclcpp::Node
                     std_msgs::msg::Int32 dummy_msg;
                     dummy_msg.data = count_;
                     dummy_publisher_->publish(dummy_msg);
+
+                    try
+                    {   
+                        // Publish to all topics
+                        motor_info = parse_string(serial_response_);
+                        // DEBUG: print motor info
+                        // RCLCPP_INFO(this->get_logger(), "Motor 1 speed: %d, Motor 2 speed: %d, Pulse 1: %d, Pulse 2: %d", motor_info.motor_1_speed, motor_info.motor_2_speed, motor_info.pulse_1, motor_info.pulse_2);
+                        
+                        // std_msgs::msg::Float64MultiArray wheel_speed_msg;
+                        sensor_msgs::msg::JointState wheel_pos_msg;
+                        geometry_msgs::msg::TwistStamped rc_input_msg;
+                        // wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, -motor_info.motor_2_speed};
+
+                        wheel_pos_msg.header.stamp = this->now();
+                        wheel_pos_msg.name = {"left_wheel_joint", "right_wheel_joint"};
+                        wheel_pos_msg.position = {static_cast<double>(motor_info.encoder_pos_1), static_cast<double>(motor_info.encoder_pos_2)};
+
+                        rc_input_msg.header.stamp = this->now();
+                        rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
+                        rc_input_msg.twist.angular.z = 1.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
+
+                        // DEBUG: print rc input
+                        RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
+                        rc_input_publisher_->publish(rc_input_msg);
+                        // wheel_speed_publisher_->publish(wheel_speed_msg);
+                        wheel_pos_publisher_->publish(wheel_pos_msg);
+                    }
+                    catch(const std::exception& e)
+                    {
+                        // ERROR: Handle parsing errors
+                        RCLCPP_ERROR(this->get_logger(), "Error parsing speed: %s", e.what());
+                    }
+                
                 }
                 else
                 {
@@ -236,49 +270,49 @@ class SpeedControlNode : public rclcpp::Node
         }
         
         // Function to publish the motor info (speed + rc inputs) to the topics
-        void publish_info()
-        {
-            motor_info_struct motor_info;
-            if(check_connection())
-            {
+        // void publish_info()
+        // {
+        //     motor_info_struct motor_info;
+        //     if(check_connection())
+        //     {
 
-                try
-                {   
-                    // Publish to all topics
-                    motor_info = parse_string(serial_response_);
-                    // DEBUG: print motor info
-                    // RCLCPP_INFO(this->get_logger(), "Motor 1 speed: %d, Motor 2 speed: %d, Pulse 1: %d, Pulse 2: %d", motor_info.motor_1_speed, motor_info.motor_2_speed, motor_info.pulse_1, motor_info.pulse_2);
+        //         try
+        //         {   
+        //             // Publish to all topics
+        //             motor_info = parse_string(serial_response_);
+        //             // DEBUG: print motor info
+        //             // RCLCPP_INFO(this->get_logger(), "Motor 1 speed: %d, Motor 2 speed: %d, Pulse 1: %d, Pulse 2: %d", motor_info.motor_1_speed, motor_info.motor_2_speed, motor_info.pulse_1, motor_info.pulse_2);
                     
-                    // std_msgs::msg::Float64MultiArray wheel_speed_msg;
-                    sensor_msgs::msg::JointState wheel_pos_msg;
-                    geometry_msgs::msg::TwistStamped rc_input_msg;
-                    // wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, -motor_info.motor_2_speed};
+        //             // std_msgs::msg::Float64MultiArray wheel_speed_msg;
+        //             sensor_msgs::msg::JointState wheel_pos_msg;
+        //             geometry_msgs::msg::TwistStamped rc_input_msg;
+        //             // wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, -motor_info.motor_2_speed};
 
-                    wheel_pos_msg.header.stamp = this->now();
-                    wheel_pos_msg.name = {"left_wheel_joint", "right_wheel_joint"};
-                    wheel_pos_msg.position = {static_cast<double>(motor_info.encoder_pos_1), static_cast<double>(motor_info.encoder_pos_2)};
+        //             wheel_pos_msg.header.stamp = this->now();
+        //             wheel_pos_msg.name = {"left_wheel_joint", "right_wheel_joint"};
+        //             wheel_pos_msg.position = {static_cast<double>(motor_info.encoder_pos_1), static_cast<double>(motor_info.encoder_pos_2)};
 
-                    rc_input_msg.header.stamp = this->now();
-                    rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
-                    rc_input_msg.twist.angular.z = 1.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
+        //             rc_input_msg.header.stamp = this->now();
+        //             rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
+        //             rc_input_msg.twist.angular.z = 1.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
 
-                    // DEBUG: print rc input
-                    // RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
-                    rc_input_publisher_->publish(rc_input_msg);
-                    // wheel_speed_publisher_->publish(wheel_speed_msg);
-                    wheel_pos_publisher_->publish(wheel_pos_msg);
-                }
-                catch(const std::exception& e)
-                {
-                    // ERROR: Handle parsing errors
-                    RCLCPP_ERROR(this->get_logger(), "Error parsing speed: %s", e.what());
-                }
-            }
-            else
-            {
-                RCLCPP_ERROR(this->get_logger(), "Serial port not open");
-            }
-        }
+        //             // DEBUG: print rc input
+        //             // RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
+        //             rc_input_publisher_->publish(rc_input_msg);
+        //             // wheel_speed_publisher_->publish(wheel_speed_msg);
+        //             wheel_pos_publisher_->publish(wheel_pos_msg);
+        //         }
+        //         catch(const std::exception& e)
+        //         {
+        //             // ERROR: Handle parsing errors
+        //             RCLCPP_ERROR(this->get_logger(), "Error parsing speed: %s", e.what());
+        //         }
+        //     }
+        //     else
+        //     {
+        //         RCLCPP_ERROR(this->get_logger(), "Serial port not open");
+        //     }
+        // }
 
         struct motor_info_struct
         {
