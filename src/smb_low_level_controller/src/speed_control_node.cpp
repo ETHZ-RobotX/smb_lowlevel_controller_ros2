@@ -236,9 +236,21 @@ class SpeedControlNode : public rclcpp::Node
                         geometry_msgs::msg::TwistStamped rc_input_msg;
                         // wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, -motor_info.motor_2_speed};
 
+                        double encoder_pos_1 = static_cast<double>(motor_info.encoder_pos_1);
+                        double encoder_pos_2 = static_cast<double>(motor_info.encoder_pos_2);
+
+                        pos_1_rad = encoder_pos_1 * (2.0 * M_PI / 960.0); // Assuming 4096 counts per revolution
+                        pos_2_rad = encoder_pos_2 * (2.0 * M_PI / 960.0); // Assuming 4096 counts per revolution
+
+                        vel_1_rad_per_sec pos_1_rad / (this->now() - prev_command_time_).seconds();
+                        vel_2_rad_per_sec pos_2_rad / (this->now() - prev_command_time_).seconds();
+
+                        prev_command_time_ = this->now();
+
                         wheel_pos_msg.header.stamp = this->now();
                         wheel_pos_msg.name = {"left_wheel_joint", "right_wheel_joint"};
-                        wheel_pos_msg.position = {static_cast<double>(motor_info.encoder_pos_1), static_cast<double>(motor_info.encoder_pos_2)};
+                        wheel_pos_msg.position = {pos_1_rad, pos_2_rad};
+                        wheel_pos_msg.velocity = {vel_2_rad_per_sec, vel_2_rad_per_sec};
 
                         rc_input_msg.header.stamp = this->now();
                         rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
