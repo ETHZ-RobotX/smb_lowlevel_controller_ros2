@@ -73,6 +73,8 @@ class SpeedControlNode : public rclcpp::Node
         int send_cmd_flag_;
         int baudrate_;
         
+        int speed_counter_ = 0; // Counter for the speed messages
+
         std::string port_;
         std::unique_ptr<serial::Serial> serial_;
         
@@ -94,6 +96,10 @@ class SpeedControlNode : public rclcpp::Node
         rclcpp::TimerBase::SharedPtr flush_timer_;
         rclcpp::TimerBase::SharedPtr read_timer_;
         rclcpp::Time last_command_time_;
+        double prev_pos_1_ = 0.0; // Previous position of motor 1
+        double prev_pos_2_ = 0.0; // Previous position of motor 2
+        double vel_1_rad_per_sec = 0.0;
+        double vel_2_rad_per_sec = 0.0;
 
         void connect()
         {
@@ -160,7 +166,7 @@ class SpeedControlNode : public rclcpp::Node
                     // RCLCPP_INFO(this->get_logger(), "Received message data:  %f %f %f", msg->data[0], msg->data[1], msg->data[2]);
                     int target_speed_1 = llround(msg->data[1] * 30.0 / M_PI);
                     int target_speed_2 = -llround(msg->data[2] * 30.0 / M_PI);
-                    last_command_time_ = this->now();
+                    // last_command_time_ = this->now();
                     // Santity check
                     int max_speed = 50; // Max speed in RPM
                     if (target_speed_1 > max_speed)
@@ -239,18 +245,29 @@ class SpeedControlNode : public rclcpp::Node
                         double encoder_pos_1 = static_cast<double>(motor_info.encoder_pos_1);
                         double encoder_pos_2 = static_cast<double>(motor_info.encoder_pos_2);
 
-                        pos_1_rad = encoder_pos_1 * (2.0 * M_PI / 960.0); // Assuming 4096 counts per revolution
-                        pos_2_rad = encoder_pos_2 * (2.0 * M_PI / 960.0); // Assuming 4096 counts per revolution
+                        double pos_1_rad = encoder_pos_1 * (2.0 * M_PI / 960.0); // Assuming 4096 counts per revolution
+                        double pos_2_rad = encoder_pos_2 * (2.0 * M_PI / 960.0); // Assuming 4096 counts per revolution
 
-                        vel_1_rad_per_sec pos_1_rad / (this->now() - prev_command_time_).seconds();
-                        vel_2_rad_per_sec pos_2_rad / (this->now() - prev_command_time_).seconds();
+                        
 
-                        prev_command_time_ = this->now();
+                        speed_counter_ ++;
+                        if (speed_counter_ > 10)
+                        {
+                            vel_1_rad_per_sec = (pos_1_rad - prev_pos_1_) / (this->now() - last_command_time_).seconds();
+                            vel_2_rad_per_sec = (pos_2_rad - prev_pos_2_) / (this->now() - last_command_time_).seconds();
+
+                            prev_pos_1_ = pos_1_rad;
+                            prev_pos_2_ = pos_2_rad;
+    
+                            last_command_time_ = this->now();
+                            speed_counter_ = 0;
+                        }
+
 
                         wheel_pos_msg.header.stamp = this->now();
                         wheel_pos_msg.name = {"left_wheel_joint", "right_wheel_joint"};
                         wheel_pos_msg.position = {pos_1_rad, pos_2_rad};
-                        wheel_pos_msg.velocity = {vel_2_rad_per_sec, vel_2_rad_per_sec};
+                        wheel_pos_msg.velocity = {vel_1_rad_per_sec, vel_2_rad_per_sec};
 
                         rc_input_msg.header.stamp = this->now();
                         rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
