@@ -35,7 +35,7 @@ class SpeedControlNode : public rclcpp::Node
             // wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_speed", 10);
             
             // Create a publisher - publishes the RC input as a Twist message
-            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("cmd_vel", 10);
+            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("rc_vel", 10);
             
             // Create a publisher - publishes a dummy message - to check the frequency of the node
             dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>("dummy", 10);
@@ -257,8 +257,10 @@ class SpeedControlNode : public rclcpp::Node
                         rc_input_msg.twist.angular.z = 1.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
 
                         // DEBUG: print rc input
-                        RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
-                        rc_input_publisher_->publish(rc_input_msg);
+                        // RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
+                        if ((std::fabs(rc_input_msg.twist.linear.x) > 0.2) || (std::fabs(rc_input_msg.twist.angular.z) > 0.2)) {
+                            rc_input_publisher_->publish(rc_input_msg);
+                        }
                         // wheel_speed_publisher_->publish(wheel_speed_msg);
                         wheel_pos_publisher_->publish(wheel_pos_msg);
                     }
