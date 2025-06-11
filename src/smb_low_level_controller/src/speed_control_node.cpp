@@ -35,7 +35,7 @@ class SpeedControlNode : public rclcpp::Node
             // wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_speed", 10);
             
             // Create a publisher - publishes the RC input as a Twist message
-            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("rc_vel", 10);
+            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("cmd_vel", 10);
             
             // Create a publisher - publishes a dummy message - to check the frequency of the node
             dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>("dummy", 10);
@@ -227,7 +227,7 @@ class SpeedControlNode : public rclcpp::Node
                     serial_response_ = response;
                     
                     // DEBUG: print incoming data stream
-                    // RCLCPP_INFO(this->get_logger(), "Response: %s", response.c_str());
+                    RCLCPP_INFO(this->get_logger(), "Response: %s", response.c_str());
 
                     count_++;
                     std_msgs::msg::Int32 dummy_msg;
@@ -263,7 +263,8 @@ class SpeedControlNode : public rclcpp::Node
                         speed_counter_ ++;
 
                         double dt = (this->now() - last_command_time_).seconds();
-                        if (speed_counter_ > 10)
+                        // DEBUG: remove the if statement
+                        if (dt > 0.1)
                         {
                             vel_1_rad_per_sec = (pos_1_rad - prev_pos_1_) / dt;
                             vel_2_rad_per_sec = (pos_2_rad - prev_pos_2_) / dt;
@@ -273,7 +274,7 @@ class SpeedControlNode : public rclcpp::Node
                             
                             prev_pos_1_ = pos_1_rad;
                             prev_pos_2_ = pos_2_rad;
-    
+
                             last_command_time_ = this->now();
                             speed_counter_ = 0;
                         }
