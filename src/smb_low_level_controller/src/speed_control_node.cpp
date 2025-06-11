@@ -100,6 +100,10 @@ class SpeedControlNode : public rclcpp::Node
         double prev_pos_2_ = 0.0; // Previous position of motor 2
         double vel_1_rad_per_sec = 0.0;
         double vel_2_rad_per_sec = 0.0;
+        double filtered_vel_1_rad_per_sec_ = 0.0;
+        double filtered_vel_2_rad_per_sec_ = 0.0;
+        bool init_flag_ = false; // Flag to check if the node is initialized
+        double alpha = 0.9; // Smoothing factor for the velocity filter
 
         void connect()
         {
@@ -245,24 +249,34 @@ class SpeedControlNode : public rclcpp::Node
                         double encoder_pos_1 = static_cast<double>(motor_info.encoder_pos_1);
                         double encoder_pos_2 = static_cast<double>(motor_info.encoder_pos_2);
 
-                        double pos_1_rad = encoder_pos_1 * (2.0 * M_PI / 960.0); // Assuming 4096 counts per revolution
-                        double pos_2_rad = encoder_pos_2 * (2.0 * M_PI / 960.0); // Assuming 4096 counts per revolution
+                        double pos_1_rad = encoder_pos_1 * (2.0 * M_PI / 3840.0); // 3840 counts per revolution
+                        double pos_2_rad = encoder_pos_2 * (2.0 * M_PI / 3840.0); // 3840 counts per revolution
 
-                        
+                        if (!init_flag_)
+                        {
+                            prev_pos_1_ = pos_1_rad;
+                            prev_pos_2_ = pos_2_rad;
+                            init_flag_ = true;
+                            return;
+                        }
 
                         speed_counter_ ++;
+
+                        double dt = (this->now() - last_command_time_).seconds();
                         if (speed_counter_ > 10)
                         {
-                            vel_1_rad_per_sec = (pos_1_rad - prev_pos_1_) / (this->now() - last_command_time_).seconds();
-                            vel_2_rad_per_sec = (pos_2_rad - prev_pos_2_) / (this->now() - last_command_time_).seconds();
+                            vel_1_rad_per_sec = (pos_1_rad - prev_pos_1_) / dt;
+                            vel_2_rad_per_sec = (pos_2_rad - prev_pos_2_) / dt;
 
+                            filtered_vel_1_rad_per_sec_ = alpha * filtered_vel_1_rad_per_sec_ + (1.0 - alpha) * vel_1_rad_per_sec;
+                            filtered_vel_2_rad_per_sec_ = alpha * filtered_vel_2_rad_per_sec_ + (1.0 - alpha) * vel_2_rad_per_sec;
+                            
                             prev_pos_1_ = pos_1_rad;
                             prev_pos_2_ = pos_2_rad;
     
                             last_command_time_ = this->now();
                             speed_counter_ = 0;
                         }
-
 
                         wheel_pos_msg.header.stamp = this->now();
                         wheel_pos_msg.name = {"left_wheel_joint", "right_wheel_joint"};
