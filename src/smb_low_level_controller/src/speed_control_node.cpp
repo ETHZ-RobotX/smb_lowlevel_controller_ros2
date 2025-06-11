@@ -50,7 +50,7 @@ class SpeedControlNode : public rclcpp::Node
             // publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
             
             // Creating timer - to read motor info (speed + rc inputs) from the motor controller
-            read_timer_ = this->create_wall_timer(5ms, std::bind(&SpeedControlNode::read_info, this));
+            read_timer_ = this->create_wall_timer(3ms, std::bind(&SpeedControlNode::read_info, this));
             
             // Creating timer - to flush the serial port input and output buffers periodically
             flush_timer_ = this->create_wall_timer(100ms, std::bind(&SpeedControlNode::flush, this));
@@ -127,7 +127,7 @@ class SpeedControlNode : public rclcpp::Node
                     serial_->write(echo_query);
 
                     // Initialize data stream - to get motor speeds and RC inputs
-                    std::string speed_query = "/\"d=\",\":\"?PIC 1_?PIC 2_?C 1_?C 2_# 5\r\n"; // change to PIC (page 272 in manual)
+                    std::string speed_query = "/\"d=\",\":\"?PIC 1_?PIC 2_?S 1_?S 2_?C 1_?C 2_# 4\r\n"; // change to PIC (page 272 in manual)
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", speed_query.c_str());
                     serial_->write(speed_query);
                     
@@ -249,40 +249,20 @@ class SpeedControlNode : public rclcpp::Node
                         double encoder_pos_1 = static_cast<double>(motor_info.encoder_pos_1);
                         double encoder_pos_2 = static_cast<double>(motor_info.encoder_pos_2);
 
+                        double wheel_speed_1 = static_cast<double>(motor_info.speed_1);
+                        double wheel_speed_2 = static_cast<double>(motor_info.speed_2);
+
+                        double wheel_speed_1_rad_per_sec = wheel_speed_1 * (2.0 * M_PI / 60.0); // Convert RPM to rad/s
+                        double wheel_speed_2_rad_per_sec = wheel_speed_2 * (2.0 * M_PI / 60.0); // Convert RPM to rad/s
+
                         double pos_1_rad = encoder_pos_1 * (2.0 * M_PI / 3840.0); // 3840 counts per revolution
                         double pos_2_rad = encoder_pos_2 * (2.0 * M_PI / 3840.0); // 3840 counts per revolution
 
-                        if (!init_flag_)
-                        {
-                            prev_pos_1_ = pos_1_rad;
-                            prev_pos_2_ = pos_2_rad;
-                            init_flag_ = true;
-                            return;
-                        }
-
-                        speed_counter_ ++;
-
-                        double dt = (this->now() - last_command_time_).seconds();
-                        // DEBUG: remove the if statement
-                        if (dt > 0.1)
-                        {
-                            vel_1_rad_per_sec = (pos_1_rad - prev_pos_1_) / dt;
-                            vel_2_rad_per_sec = (pos_2_rad - prev_pos_2_) / dt;
-
-                            filtered_vel_1_rad_per_sec_ = alpha * filtered_vel_1_rad_per_sec_ + (1.0 - alpha) * vel_1_rad_per_sec;
-                            filtered_vel_2_rad_per_sec_ = alpha * filtered_vel_2_rad_per_sec_ + (1.0 - alpha) * vel_2_rad_per_sec;
-                            
-                            prev_pos_1_ = pos_1_rad;
-                            prev_pos_2_ = pos_2_rad;
-
-                            last_command_time_ = this->now();
-                            speed_counter_ = 0;
-                        }
-
+                        
                         wheel_pos_msg.header.stamp = this->now();
                         wheel_pos_msg.name = {"left_wheel_joint", "right_wheel_joint"};
                         wheel_pos_msg.position = {pos_1_rad, pos_2_rad};
-                        wheel_pos_msg.velocity = {vel_1_rad_per_sec, vel_2_rad_per_sec};
+                        wheel_pos_msg.velocity = {wheel_speed_1_rad_per_sec, wheel_speed_2_rad_per_sec};
 
                         rc_input_msg.header.stamp = this->now();
                         rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
@@ -364,6 +344,8 @@ class SpeedControlNode : public rclcpp::Node
         {
             int pulse_1;
             int pulse_2;
+            int speed_1;
+            int speed_2;
             int encoder_pos_1;
             int encoder_pos_2;
         };
@@ -383,6 +365,14 @@ class SpeedControlNode : public rclcpp::Node
             motor_info.pulse_2 = std::stod(token);
             str.erase(0, token.length() + delimiter_.length());
 
+            token = str.substr(0, str.find(delimiter_));
+            motor_info.speed_1 = std::stod(token);
+            str.erase(0, token.length() + delimiter_.length());
+
+            token = str.substr(0, str.find(delimiter_));
+            motor_info.speed_2 = std::stod(token);
+            str.erase(0, token.length() + delimiter_.length());
+            
             token = str.substr(0, str.find(delimiter_));
             motor_info.encoder_pos_1 = std::stod(token);
             str.erase(0, token.length() + delimiter_.length());
