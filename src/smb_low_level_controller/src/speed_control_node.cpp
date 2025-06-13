@@ -270,9 +270,25 @@ class SpeedControlNode : public rclcpp::Node
 
                         
                         wheel_pos_msg.header.stamp = this->now();
-                        wheel_pos_msg.name = {"left_wheel_joint", "right_wheel_joint"};
-                        wheel_pos_msg.position = {pos_1_rad, pos_2_rad};
-                        wheel_pos_msg.velocity = {wheel_speed_1_rad_per_sec, wheel_speed_2_rad_per_sec};
+                        wheel_pos_msg.name = {"LF_WHEEL_JOINT", "RF_WHEEL_JOINT", "LH_WHEEL_JOINT", "RH_WHEEL_JOINT"};
+                        
+                        // Calculate positions in radians for all wheels
+                        // Note: Right wheels rotate in opposite direction (negative)
+                        double pos_lf_rad = pos_1_rad;  // Left Front
+                        double pos_rf_rad = pos_2_rad; // Right Front (opposite direction)
+                        double pos_lh_rad = pos_1_rad;  // Left Hind
+                        double pos_rh_rad = pos_2_rad; // Right Hind (opposite direction)
+                        
+                        // Calculate velocities in rad/s for all wheels
+                        // Note: Right wheels rotate in opposite direction (negative)
+                        double vel_lf_rad_per_sec = wheel_speed_1_rad_per_sec;  // Left Front
+                        double vel_rf_rad_per_sec = wheel_speed_2_rad_per_sec; // Right Front
+                        double vel_lh_rad_per_sec = wheel_speed_1_rad_per_sec;  // Left Hind
+                        double vel_rh_rad_per_sec = wheel_speed_2_rad_per_sec; // Right Hind
+                        
+                        // Set positions and velocities
+                        wheel_pos_msg.position = {pos_lf_rad, pos_rf_rad, pos_lh_rad, pos_rh_rad};
+                        wheel_pos_msg.velocity = {vel_lf_rad_per_sec, vel_rf_rad_per_sec, vel_lh_rad_per_sec, vel_rh_rad_per_sec};
 
                         rc_input_msg.header.stamp = this->now();
                         rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
@@ -283,7 +299,6 @@ class SpeedControlNode : public rclcpp::Node
                         if ((std::fabs(rc_input_msg.twist.linear.x) > 0.2) || (std::fabs(rc_input_msg.twist.angular.z) > 0.2)) {
                             rc_input_publisher_->publish(rc_input_msg);
                         }
-                        // wheel_speed_publisher_->publish(wheel_speed_msg);
                         wheel_pos_publisher_->publish(wheel_pos_msg);
                     }
                     catch(const std::exception& e)
