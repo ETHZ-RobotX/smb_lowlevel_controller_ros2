@@ -9,6 +9,7 @@
 #include <geometry_msgs/msg/twist_stamped.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include "sensor_msgs/msg/joint_state.hpp"
+#include "rclcpp/qos.hpp"
 
 using namespace std::chrono_literals;
 
@@ -35,16 +36,25 @@ class SpeedControlNode : public rclcpp::Node
             // wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_speed", 10);
             
             // Create a publisher - publishes the RC input as a Twist message
-            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("rc_vel", 10);
+            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>(
+                "rc_vel", 
+                rclcpp::QoS(10).reliable().durability_volatile()
+            );
             
             // Create a publisher - publishes a dummy message - to check the frequency of the node
-            dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>("dummy", 10);
+            dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>(
+                "dummy", 
+                rclcpp::QoS(10).reliable().durability_volatile()
+            );
             
             // Creating a subscriber - to receive the target speed
             wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("wheel_joint_commands", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
 
             //Creating a publisher - to publish the wheel positions
-            wheel_pos_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
+            wheel_pos_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>(
+                "joint_states", 
+                rclcpp::QoS(10).reliable().durability_volatile()
+            );
             
             // Creating timer - for publishing topics
             // publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
