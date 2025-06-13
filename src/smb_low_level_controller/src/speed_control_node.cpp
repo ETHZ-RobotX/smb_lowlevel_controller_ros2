@@ -35,7 +35,7 @@ class SpeedControlNode : public rclcpp::Node
             // wheel_speed_publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_speed", 10);
             
             // Create a publisher - publishes the RC input as a Twist message
-            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("cmd_vel", 10);
+            rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("rc_vel", 10);
             
             // Create a publisher - publishes a dummy message - to check the frequency of the node
             dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>("dummy", 10);
@@ -247,10 +247,10 @@ class SpeedControlNode : public rclcpp::Node
                         // wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, -motor_info.motor_2_speed};
 
                         double encoder_pos_1 = static_cast<double>(motor_info.encoder_pos_1);
-                        double encoder_pos_2 = static_cast<double>(motor_info.encoder_pos_2);
+                        double encoder_pos_2 = -1.0 *static_cast<double>(motor_info.encoder_pos_2);
 
                         double wheel_speed_1 = static_cast<double>(motor_info.speed_1);
-                        double wheel_speed_2 = static_cast<double>(motor_info.speed_2);
+                        double wheel_speed_2 = -1.0 * static_cast<double>(motor_info.speed_2);
 
                         double wheel_speed_1_rad_per_sec = wheel_speed_1 * (2.0 * M_PI / 60.0); // Convert RPM to rad/s
                         double wheel_speed_2_rad_per_sec = wheel_speed_2 * (2.0 * M_PI / 60.0); // Convert RPM to rad/s
