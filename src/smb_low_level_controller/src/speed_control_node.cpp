@@ -25,11 +25,21 @@ class SpeedControlNode : public rclcpp::Node
             this->declare_parameter<int>("send_cmd", 1);                            // Parameter for the send command flag: 
                                                                                     // 0 - Teleop directly from RC to motor controller 
                                                                                     // 1 - send commands from this node to the motor controller
+            this->declare_parameter<int>("rc_channel_1", 1);                // Parameter for the RC channel 1
+            this->declare_parameter<int>("rc_channel_2", 2);                // Parameter for the RC channel 2
 
             // Connect to the motor controller
             connect();
             
             send_cmd_flag_ = this->get_parameter("send_cmd").as_int();
+            rc_channel_1_ = this->get_parameter("rc_channel_1").as_int();
+            rc_channel_2_ = this->get_parameter("rc_channel_2").as_int();
+            port_ = this->get_parameter("port").as_string();
+            baudrate_ = this->get_parameter("baudrate").as_int();
+            motor_1_channel_ = this->get_parameter("motor_1_channel").as_int();
+            motor_2_channel_ = this->get_parameter("motor_2_channel").as_int();
+            
+
             RCLCPP_INFO(this->get_logger(), "Serial control flag: %d", send_cmd_flag_);
             
             // Create a publisher - publishes the motor speeds in RPM
@@ -81,6 +91,9 @@ class SpeedControlNode : public rclcpp::Node
         int motor_1_channel_;
         int motor_2_channel_;
         int send_cmd_flag_;
+        int rc_channel_1_;
+        int rc_channel_2_;
+        
         int baudrate_;
         
         int speed_counter_ = 0; // Counter for the speed messages
@@ -137,7 +150,7 @@ class SpeedControlNode : public rclcpp::Node
                     serial_->write(echo_query);
 
                     // Initialize data stream - to get motor speeds and RC inputs
-                    std::string speed_query = "/\"d=\",\":\"?PIC 1_?PIC 2_?S 1_?S 2_?C 1_?C 2_# 4\r\n"; // change to PIC (page 272 in manual)
+                    std::string speed_query = "/\"d=\",\":\"?PIC " + std::to_string(rc_channel_1_) + "_?PIC " + std::to_string(rc_channel_2_) + "_?C 1_?C 2_# 5\r\n"; // change to PIC (page 272 in manual)
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", speed_query.c_str());
                     serial_->write(speed_query);
                     
