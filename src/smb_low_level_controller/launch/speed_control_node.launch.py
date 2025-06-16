@@ -11,6 +11,17 @@ import os
 
 
 def generate_launch_description():
+     
+    robot_id = os.environ.get('ROBOT_ID', '000') # default to '000' if not set
+
+    # Set RC channels based on robot ID
+    if robot_id == '264':
+        rc_channel_1 = 7
+        rc_channel_2 = 8
+    else:
+        rc_channel_1 = 1
+        rc_channel_2 = 2
+    
     # Low-level gazebo controller node
     low_level_controller = Node(
         package="smb_low_level_controller",
@@ -23,8 +34,9 @@ def generate_launch_description():
                 {"motor_1_channel": 1},
                 {"motor_2_channel": 2},
                 {"send_cmd": 1},
-                {"rc_channel_1": 1},
-                {"rc_channel_2": 2},
+                {"rc_channel_1": rc_channel_1},
+                {"rc_channel_2": rc_channel_2},
+                {"use_sim_time": False},
             ],
     )
     
