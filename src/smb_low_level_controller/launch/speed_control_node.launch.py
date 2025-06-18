@@ -5,6 +5,7 @@ from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch.substitutions import PythonExpression
+from launch.actions import LogInfo
 from ament_index_python.packages import get_package_share_directory
 import os
 
@@ -15,7 +16,11 @@ def generate_launch_description():
     robot_id = os.environ.get('ROBOT_ID', '000') # default to '000' if not set
 
     # Set RC channels based on robot ID
-    if robot_id == '264':
+    if robot_id == '000':
+        return LaunchDescription([
+            LogInfo(msg="Environment variable ROBOT_ID is not set, exiting...")
+        ])
+    elif robot_id == '264':
         rc_channel_1 = 7
         rc_channel_2 = 8
     else:
