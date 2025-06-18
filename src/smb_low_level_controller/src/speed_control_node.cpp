@@ -25,8 +25,8 @@ class SpeedControlNode : public rclcpp::Node
             this->declare_parameter<int>("send_cmd", 1);                            // Parameter for the send command flag: 
                                                                                     // 0 - Teleop directly from RC to motor controller 
                                                                                     // 1 - send commands from this node to the motor controller
-            this->declare_parameter<int>("rc_channel_1", 0);                // Parameter for the RC channel 1
-            this->declare_parameter<int>("rc_channel_2", 0);                // Parameter for the RC channel 2
+            this->declare_parameter<int>("rc_channel_1", 1);                // Parameter for the RC channel 1
+            this->declare_parameter<int>("rc_channel_2", 2);                // Parameter for the RC channel 2
 
             
             send_cmd_flag_ = this->get_parameter("send_cmd").as_int();
@@ -152,19 +152,19 @@ class SpeedControlNode : public rclcpp::Node
                     serial_->write(echo_query);
 
                     // Initialize data stream - to get motor speeds and RC inputs
-                    std::string speed_query = "/\"d=\",\":\"?PIC " + std::to_string(rc_channel_1_) + "_?PIC " + std::to_string(rc_channel_2_) + "_?C 1_?C 2_# 5\r\n"; // change to PIC (page 272 in manual)
+                    std::string speed_query = "/\"d=\",\":\"?PIC " + std::to_string(rc_channel_1_) + "_?PIC " + std::to_string(rc_channel_2_) + "_?S 1_?S 2_?C 1_?C 2_# 5\r\n"; // change to PIC (page 272 in manual)
                     RCLCPP_INFO(this->get_logger(), "Sending Query %s", speed_query.c_str());
                     serial_->write(speed_query);
                     
                 }
                 else
                 {
-                    RCLCPP_ERROR(this->get_logger(), "Serial port not open");
+                    // RCLCPP_ERROR(this->get_logger(), "Serial port not open");
                 }
             }
             catch(serial::IOException& e)
             {
-                RCLCPP_ERROR(this->get_logger(), "Unable to open port");
+                // RCLCPP_ERROR(this->get_logger(), "Unable to open port");
             }
         }
 
@@ -197,7 +197,7 @@ class SpeedControlNode : public rclcpp::Node
                     int target_speed_2 = -llround(msg->data[2] * 30.0 / M_PI);
                     // last_command_time_ = this->now();
                     // Santity check
-                    int max_speed = 50; // Max speed in RPM
+                    int max_speed = 100; // Max speed in RPM
                     if (target_speed_1 > max_speed)
                     {
                         target_speed_1 = max_speed;
@@ -225,7 +225,7 @@ class SpeedControlNode : public rclcpp::Node
                         std::string speed_command = "!S 1 " + std::to_string(target_speed_1) + "_" + "!S 2 " + std::to_string(target_speed_2) + "\r\n";
                         
                         // DEBUG: print speed command
-                        RCLCPP_INFO(this->get_logger(), "Sending command: %s", speed_command.c_str());
+                        // RCLCPP_INFO(this->get_logger(), "Sending command: %s", speed_command.c_str());
                         
                         serial_->write(speed_command);
                     }
@@ -233,7 +233,7 @@ class SpeedControlNode : public rclcpp::Node
                 }
                 else
                 {
-                    RCLCPP_ERROR(this->get_logger(), "Serial port not open");
+                    // RCLCPP_ERROR(this->get_logger(), "Serial port n open");
                 }
             }
         }
@@ -252,7 +252,7 @@ class SpeedControlNode : public rclcpp::Node
                     serial_response_ = response;
                     
                     // DEBUG: print incoming data stream
-                    RCLCPP_INFO(this->get_logger(), "Response: %s", response.c_str());
+                    // RCLCPP_INFO(this->get_logger(), "Response: %s", response.c_str());
 
                     count_++;
                     std_msgs::msg::Int32 dummy_msg;
@@ -319,7 +319,7 @@ class SpeedControlNode : public rclcpp::Node
                     catch(const std::exception& e)
                     {
                         // ERROR: Handle parsing errors
-                        RCLCPP_ERROR(this->get_logger(), "Error parsing speed: %s", e.what());
+                        // RCLCPP_ERROR(this->get_logger(), "Error parsing speed: %s", e.what());
                     }
                 
                 }
@@ -331,7 +331,7 @@ class SpeedControlNode : public rclcpp::Node
             }
             else
             {
-                RCLCPP_ERROR(this->get_logger(), "Serial port not open");
+                // RCLCPP_ERROR(this->get_logger(), "Serial port not open");
             }
         }
         
