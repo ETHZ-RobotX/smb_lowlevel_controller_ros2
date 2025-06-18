@@ -25,15 +25,17 @@ class SpeedControlNode : public rclcpp::Node
             this->declare_parameter<int>("send_cmd", 1);                            // Parameter for the send command flag: 
                                                                                     // 0 - Teleop directly from RC to motor controller 
                                                                                     // 1 - send commands from this node to the motor controller
-            this->declare_parameter<int>("rc_channel_1", 1);                // Parameter for the RC channel 1
-            this->declare_parameter<int>("rc_channel_2", 2);                // Parameter for the RC channel 2
+            this->declare_parameter<int>("rc_channel_1", 0);                // Parameter for the RC channel 1
+            this->declare_parameter<int>("rc_channel_2", 0);                // Parameter for the RC channel 2
 
-            // Connect to the motor controller
-            connect();
             
             send_cmd_flag_ = this->get_parameter("send_cmd").as_int();
             rc_channel_1_ = this->get_parameter("rc_channel_1").as_int();
             rc_channel_2_ = this->get_parameter("rc_channel_2").as_int();
+            
+            // Connect to the motor controller
+            connect();
+            
             port_ = this->get_parameter("port").as_string();
             baudrate_ = this->get_parameter("baudrate").as_int();
             motor_1_channel_ = this->get_parameter("motor_1_channel").as_int();
