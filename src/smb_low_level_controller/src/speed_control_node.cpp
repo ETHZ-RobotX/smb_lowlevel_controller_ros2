@@ -54,10 +54,10 @@ class SpeedControlNode : public rclcpp::Node
             );
             
             // Create a publisher - publishes a dummy message - to check the frequency of the node
-            dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>(
-                "dummy", 
-                rclcpp::QoS(10).best_effort().durability_volatile()
-            );
+            // dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>(
+            //     "dummy", 
+            //     rclcpp::QoS(10).best_effort().durability_volatile()
+            // );
             
             // Creating a subscriber - to receive the target speed
             wheel_speed_subscriber_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("wheel_joint_commands", 10, std::bind(&SpeedControlNode::set_speed, this, std::placeholders::_1));
@@ -116,7 +116,7 @@ class SpeedControlNode : public rclcpp::Node
         rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_speed_subscriber_;
         rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr wheel_pos_publisher_;
         rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr rc_input_publisher_;
-        rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr dummy_publisher_;
+        // rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr dummy_publisher_;
         rclcpp::TimerBase::SharedPtr publish_timer_;
         rclcpp::TimerBase::SharedPtr flush_timer_;
         rclcpp::TimerBase::SharedPtr read_timer_;
@@ -172,6 +172,11 @@ class SpeedControlNode : public rclcpp::Node
         {
             if(check_connection())
             {
+            // Stop all ongoing communication to and from the controller
+                std::string stop_query = "#\r\n";
+                RCLCPP_INFO(this->get_logger(), "Sending Query %s", stop_query.c_str());
+                serial_->write(stop_query);   
+                  
                 serial_->close();
                 RCLCPP_INFO(this->get_logger(), "Serial port closed");
                 state_ = 0;
@@ -245,7 +250,7 @@ class SpeedControlNode : public rclcpp::Node
             {
                 
                 motor_info_struct motor_info;
-                std::string response = serial_->readline(30, "\r");
+                std::string response = serial_->readline(60, "\r");
                 // Check if it starts with prefix
                 if(response.find(prefix_) == 0)
                 {
@@ -255,9 +260,9 @@ class SpeedControlNode : public rclcpp::Node
                     RCLCPP_INFO(this->get_logger(), "Response: %s", response.c_str());
 
                     count_++;
-                    std_msgs::msg::Int32 dummy_msg;
-                    dummy_msg.data = count_;
-                    dummy_publisher_->publish(dummy_msg);
+                    // std_msgs::msg::Int32 dummy_msg;
+                    // dummy_msg.data = count_;
+                    // dummy_publisher_->publish(dummy_msg);
 
                     try
                     {   
