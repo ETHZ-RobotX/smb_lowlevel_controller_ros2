@@ -50,13 +50,13 @@ class SpeedControlNode : public rclcpp::Node
             // Create a publisher - publishes the RC input as a Twist message
             rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>(
                 "rc_vel", 
-                rclcpp::QoS(10).reliable().durability_volatile()
+                rclcpp::QoS(10).best_effort().durability_volatile()
             );
             
             // Create a publisher - publishes a dummy message - to check the frequency of the node
             dummy_publisher_ = this->create_publisher<std_msgs::msg::Int32>(
                 "dummy", 
-                rclcpp::QoS(10).reliable().durability_volatile()
+                rclcpp::QoS(10).best_effort().durability_volatile()
             );
             
             // Creating a subscriber - to receive the target speed
@@ -65,14 +65,14 @@ class SpeedControlNode : public rclcpp::Node
             //Creating a publisher - to publish the wheel positions
             wheel_pos_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>(
                 "joint_states", 
-                rclcpp::QoS(10).reliable().durability_volatile()
+                rclcpp::QoS(10).best_effort().durability_volatile()
             );
             
             // Creating timer - for publishing topics
             // publish_timer_ = this->create_wall_timer(10ms, std::bind(&SpeedControlNode::publish_info, this));
             
             // Creating timer - to read motor info (speed + rc inputs) from the motor controller
-            read_timer_ = this->create_wall_timer(3ms, std::bind(&SpeedControlNode::read_info, this));
+            read_timer_ = this->create_wall_timer(5ms, std::bind(&SpeedControlNode::read_info, this));
             
             // Creating timer - to flush the serial port input and output buffers periodically
             flush_timer_ = this->create_wall_timer(100ms, std::bind(&SpeedControlNode::flush, this));
@@ -252,7 +252,7 @@ class SpeedControlNode : public rclcpp::Node
                     serial_response_ = response;
                     
                     // DEBUG: print incoming data stream
-                    // RCLCPP_INFO(this->get_logger(), "Response: %s", response.c_str());
+                    RCLCPP_INFO(this->get_logger(), "Response: %s", response.c_str());
 
                     count_++;
                     std_msgs::msg::Int32 dummy_msg;
@@ -282,6 +282,9 @@ class SpeedControlNode : public rclcpp::Node
 
                         double pos_1_rad = encoder_pos_1 * (2.0 * M_PI / 3840.0); // 3840 counts per revolution
                         double pos_2_rad = encoder_pos_2 * (2.0 * M_PI / 3840.0); // 3840 counts per revolution
+
+                        //Debug: print wheel positions
+                        // RCLCPP_INFO(this->get_logger(), "Wheel positions: LF: %f, RF: %f, LH: %f, RH: %f", pos_1_rad, pos_2_rad, pos_1_rad, pos_2_rad);
 
                         
                         wheel_pos_msg.header.stamp = this->now();
@@ -393,6 +396,34 @@ class SpeedControlNode : public rclcpp::Node
         // Function to parse the incoming data stream into motor speeds and rc inputs
         motor_info_struct parse_string(std::string str)
         {
+
+            // Check for exactly one '='
+            size_t equal_count = std::count(str.begin(), str.end(), '=');
+            if (equal_count != 1) {
+                RCLCPP_INFO(this->get_logger(), "Invalid format: expected exactly one '='");
+                throw std::runtime_error("Invalid format: expected exactly one '='");
+            }
+
+            // Check for exactly 5 ':' delimiters
+            size_t colon_count = std::count(str.begin(), str.end(), ':');
+            if (colon_count != 5) {
+                RCLCPP_INFO(this->get_logger(), "Invalid format: expected exactly five ':'");
+                throw std::runtime_error("Invalid format: expected exactly five ':'");
+            }
+
+            // Sanity check: no '+' allowed
+            if (str.find('+') != std::string::npos) {
+                RCLCPP_INFO(this->get_logger(), "Invalid format: '+' character is not allowed");
+                throw std::runtime_error("Invalid format: '+' character is not allowed");
+            }
+
+            // // Find the '=' sign and extract the data substring
+            // size_t eq_pos = str.find('=');
+            // if (eq_pos == std::string::npos || eq_pos + 1 >= str.length()) {
+            //     RCLCPP_INFO(this->get_logger(), "Invalid format: '=' in wrong position");
+            //     throw std::runtime_error("Invalid format: '=' in wrong position");
+            // }
+            
             // Parses incoming data stream into the motor speeds and rc inputs
             motor_info_struct motor_info;
             std::string token;
