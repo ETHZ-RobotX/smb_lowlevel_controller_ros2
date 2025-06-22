@@ -49,8 +49,8 @@ class SpeedControlNode : public rclcpp::Node
             
             // Create a publisher - publishes the RC input as a Twist message
             rc_input_publisher_ = this->create_publisher<geometry_msgs::msg::TwistStamped>(
-                "rc_vel", 
-                rclcpp::QoS(10).best_effort().durability_volatile()
+                "rc_vel",
+                rclcpp::QoS(10).reliable().durability_volatile()
             );
             
             // Create a publisher - publishes a dummy message - to check the frequency of the node
@@ -64,8 +64,8 @@ class SpeedControlNode : public rclcpp::Node
 
             //Creating a publisher - to publish the wheel positions
             wheel_pos_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>(
-                "joint_states", 
-                rclcpp::QoS(10).best_effort().durability_volatile()
+                "joint_states",
+                rclcpp::QoS(10).reliable().durability_volatile()
             );
             
             // Creating timer - for publishing topics
@@ -257,7 +257,7 @@ class SpeedControlNode : public rclcpp::Node
                     serial_response_ = response;
                     
                     // DEBUG: print incoming data stream
-                    RCLCPP_INFO(this->get_logger(), "Response: %s", response.c_str());
+                    // RCLCPP_INFO(this->get_logger(), "Response: %s", response.c_str());
 
                     count_++;
                     // std_msgs::msg::Int32 dummy_msg;
@@ -405,20 +405,20 @@ class SpeedControlNode : public rclcpp::Node
             // Check for exactly one '='
             size_t equal_count = std::count(str.begin(), str.end(), '=');
             if (equal_count != 1) {
-                RCLCPP_INFO(this->get_logger(), "Invalid format: expected exactly one '='");
+                // RCLCPP_INFO(this->get_logger(), "Invalid format: expected exactly one '='");
                 throw std::runtime_error("Invalid format: expected exactly one '='");
             }
 
             // Check for exactly 5 ':' delimiters
             size_t colon_count = std::count(str.begin(), str.end(), ':');
             if (colon_count != 5) {
-                RCLCPP_INFO(this->get_logger(), "Invalid format: expected exactly five ':'");
+                // RCLCPP_INFO(this->get_logger(), "Invalid format: expected exactly five ':'");
                 throw std::runtime_error("Invalid format: expected exactly five ':'");
             }
 
             // Sanity check: no '+' allowed
             if (str.find('+') != std::string::npos) {
-                RCLCPP_INFO(this->get_logger(), "Invalid format: '+' character is not allowed");
+                // RCLCPP_INFO(this->get_logger(), "Invalid format: '+' character is not allowed");
                 throw std::runtime_error("Invalid format: '+' character is not allowed");
             }
 
