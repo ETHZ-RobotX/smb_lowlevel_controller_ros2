@@ -226,9 +226,9 @@ class SpeedControlNode : public rclcpp::Node
                     }
                     else
                     {
-                        
-                        std::string speed_command = "!S 1 " + std::to_string(target_speed_1) + "_" + "!S 2 " + std::to_string(target_speed_2) + "\r\n";
-                        
+
+                        std::string speed_command = "!S 1 " + std::to_string(-1.0*target_speed_1) + "_" + "!S 2 " + std::to_string(-1.0*target_speed_2) + "\r\n";
+
                         // DEBUG: print speed command
                         // RCLCPP_INFO(this->get_logger(), "Sending command: %s", speed_command.c_str());
                         
@@ -314,8 +314,8 @@ class SpeedControlNode : public rclcpp::Node
                         wheel_pos_msg.velocity = {vel_lf_rad_per_sec, vel_rf_rad_per_sec, vel_lh_rad_per_sec, vel_rh_rad_per_sec};
 
                         rc_input_msg.header.stamp = this->now();
-                        rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
-                        rc_input_msg.twist.angular.z = 1.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
+                        rc_input_msg.twist.linear.x = -1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
+                        rc_input_msg.twist.angular.z = -1.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
 
                         // DEBUG: print rc input
                         // RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
