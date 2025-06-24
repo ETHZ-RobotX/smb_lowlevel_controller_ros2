@@ -198,8 +198,8 @@ class SpeedControlNode : public rclcpp::Node
                 {   
                     // DEBUG: print put message data
                     // RCLCPP_INFO(this->get_logger(), "Received message data:  %f %f %f", msg->data[0], msg->data[1], msg->data[2]);
-                    int target_speed_1 = llround(msg->data[1] * 30.0 / M_PI);
-                    int target_speed_2 = -llround(msg->data[2] * 30.0 / M_PI);
+                    int target_speed_1 = -llround(msg->data[1] * 30.0 / M_PI);
+                    int target_speed_2 = llround(msg->data[2] * 30.0 / M_PI);
                     // last_command_time_ = this->now();
                     // Santity check
                     int max_speed = 100; // Max speed in RPM
@@ -227,7 +227,7 @@ class SpeedControlNode : public rclcpp::Node
                     else
                     {
 
-                        std::string speed_command = "!S 1 " + std::to_string(-1.0*target_speed_1) + "_" + "!S 2 " + std::to_string(-1.0*target_speed_2) + "\r\n";
+                        std::string speed_command = "!S 1 " + std::to_string(target_speed_2) + "_" + "!S 2 " + std::to_string(target_speed_1) + "\r\n";
 
                         // DEBUG: print speed command
                         // RCLCPP_INFO(this->get_logger(), "Sending command: %s", speed_command.c_str());
@@ -314,8 +314,8 @@ class SpeedControlNode : public rclcpp::Node
                         wheel_pos_msg.velocity = {vel_lf_rad_per_sec, vel_rf_rad_per_sec, vel_lh_rad_per_sec, vel_rh_rad_per_sec};
 
                         rc_input_msg.header.stamp = this->now();
-                        rc_input_msg.twist.linear.x = -1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
-                        rc_input_msg.twist.angular.z = -1.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
+                        rc_input_msg.twist.linear.x = (motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
+                        rc_input_msg.twist.angular.z = (motor_info.pulse_1 + (motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
 
                         // DEBUG: print rc input
                         // RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
@@ -342,51 +342,6 @@ class SpeedControlNode : public rclcpp::Node
                 // RCLCPP_ERROR(this->get_logger(), "Serial port not open");
             }
         }
-        
-        // Function to publish the motor info (speed + rc inputs) to the topics
-        // void publish_info()
-        // {
-        //     motor_info_struct motor_info;
-        //     if(check_connection())
-        //     {
-
-        //         try
-        //         {   
-        //             // Publish to all topics
-        //             motor_info = parse_string(serial_response_);
-        //             // DEBUG: print motor info
-        //             // RCLCPP_INFO(this->get_logger(), "Motor 1 speed: %d, Motor 2 speed: %d, Pulse 1: %d, Pulse 2: %d", motor_info.motor_1_speed, motor_info.motor_2_speed, motor_info.pulse_1, motor_info.pulse_2);
-                    
-        //             // std_msgs::msg::Float64MultiArray wheel_speed_msg;
-        //             sensor_msgs::msg::JointState wheel_pos_msg;
-        //             geometry_msgs::msg::TwistStamped rc_input_msg;
-        //             // wheel_speed_msg.data = {this->now().seconds(), motor_info.motor_1_speed, -motor_info.motor_2_speed};
-
-        //             wheel_pos_msg.header.stamp = this->now();
-        //             wheel_pos_msg.name = {"left_wheel_joint", "right_wheel_joint"};
-        //             wheel_pos_msg.position = {static_cast<double>(motor_info.encoder_pos_1), static_cast<double>(motor_info.encoder_pos_2)};
-
-        //             rc_input_msg.header.stamp = this->now();
-        //             rc_input_msg.twist.linear.x = 1.0*(motor_info.pulse_1 + (-motor_info.pulse_2))/1000.0; //Max linear velocity is 5 m/s
-        //             rc_input_msg.twist.angular.z = 1.0*(-motor_info.pulse_1 + (-motor_info.pulse_2))/(1000.0*wheel_base_); //Max angular velocity is 3 rad/s
-
-        //             // DEBUG: print rc input
-        //             // RCLCPP_INFO(this->get_logger(), "RC input: %f, %f", rc_input_msg.twist.linear.x, rc_input_msg.twist.angular.z);
-        //             rc_input_publisher_->publish(rc_input_msg);
-        //             // wheel_speed_publisher_->publish(wheel_speed_msg);
-        //             wheel_pos_publisher_->publish(wheel_pos_msg);
-        //         }
-        //         catch(const std::exception& e)
-        //         {
-        //             // ERROR: Handle parsing errors
-        //             RCLCPP_ERROR(this->get_logger(), "Error parsing speed: %s", e.what());
-        //         }
-        //     }
-        //     else
-        //     {
-        //         RCLCPP_ERROR(this->get_logger(), "Serial port not open");
-        //     }
-        // }
 
         struct motor_info_struct
         {
